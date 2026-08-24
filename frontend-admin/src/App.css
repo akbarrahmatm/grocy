@@ -47,6 +47,10 @@
   cursor: pointer;
 }
 
+.ad-root button {
+  cursor: pointer;
+}
+
 .ad-card {
   background: var(--ad-card);
   border: 1px solid var(--ad-border);
@@ -102,6 +106,13 @@
 }
 .ad-btn-ghost:hover {
   background: var(--ad-active-bg);
+}
+
+.ad-btn-danger {
+  background: #ef4444;
+}
+.ad-btn-danger:hover {
+  background: #dc2626;
 }
 
 /* ── Animations ─────────────────────────────────────────────────────────── */

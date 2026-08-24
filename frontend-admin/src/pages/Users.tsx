@@ -434,11 +434,15 @@ function Users({ role }: UsersProps) {
                 <button
                   type="button"
                   onClick={() => setShowCreate(false)}
-                  className="ad-btn-ghost flex-1"
+                  className="ad-btn ad-btn-ghost flex-1 justify-center"
                 >
                   Cancel
                 </button>
-                <button type="submit" disabled={creating} className="ad-btn flex-1">
+                <button
+                  type="submit"
+                  disabled={creating}
+                  className="ad-btn flex-1 justify-center"
+                >
                   <UserPlus size={16} />
                   {creating ? "Adding…" : "Add User"}
                 </button>
