@@ -20,8 +20,8 @@
 
   background: var(--ad-bg);
   color: var(--ad-fg);
-  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
-    sans-serif;
+  font-family: "Plus Jakarta Sans", ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", Roboto, sans-serif;
   font-size: 16px;
   line-height: 1.6;
 }
@@ -40,6 +40,15 @@
 .ad-sidebar {
   background: var(--ad-card);
   border-right: 1px solid var(--ad-border);
+}
+
+.ad-sidebar a,
+.ad-sidebar button {
+  cursor: pointer;
+}
+
+.ad-root button {
+  cursor: pointer;
 }
 
 .ad-card {
@@ -97,6 +106,13 @@
 }
 .ad-btn-ghost:hover {
   background: var(--ad-active-bg);
+}
+
+.ad-btn-danger {
+  background: #ef4444;
+}
+.ad-btn-danger:hover {
+  background: #dc2626;
 }
 
 /* ── Animations ─────────────────────────────────────────────────────────── */
