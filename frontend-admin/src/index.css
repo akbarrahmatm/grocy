@@ -179,7 +179,7 @@
 @layer base {
   * {
     border-color: var(--color-border);
-    font-family: ui-sans-serif, system-ui, sans-serif;
+    font-family: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
   }
 
   body {

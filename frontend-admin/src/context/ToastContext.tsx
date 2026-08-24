@@ -1,9 +1,9 @@
-import { CheckCircle2 } from "lucide-react";
+import { CheckCircle2, CircleAlert } from "lucide-react";
 import { createContext, useState, type ReactNode } from "react";
 import type { Toast } from "@/types";
 
 export interface ToastCtx {
-  push: (text: string) => void;
+  push: (text: string, variant?: "success" | "error") => void;
 }
 
 // eslint-disable-next-line react-refresh/only-export-components
@@ -12,9 +12,9 @@ export const ToastContext = createContext<ToastCtx | null>(null);
 export function ToastProvider({ children }: { children: ReactNode }) {
   const [toasts, setToasts] = useState<Toast[]>([]);
 
-  function push(text: string) {
+  function push(text: string, variant: "success" | "error" = "success") {
     const id = Date.now() + Math.random();
-    setToasts((t) => [...t, { id, text }]);
+    setToasts((t) => [...t, { id, text, variant }]);
     setTimeout(() => setToasts((t) => t.filter((x) => x.id !== id)), 3000);
   }
 
@@ -35,7 +35,11 @@ function ToastList({ toasts }: { toasts: Toast[] }) {
           key={t.id}
           className="ad-card px-4 py-2.5 text-sm font-medium shadow-lg ad-fade flex items-center gap-2"
         >
-          <CheckCircle2 size={16} className="text-green-500" />
+          {t.variant === "error" ? (
+            <CircleAlert size={16} className="text-red-500" />
+          ) : (
+            <CheckCircle2 size={16} className="text-green-500" />
+          )}
           {t.text}
         </div>
       ))}

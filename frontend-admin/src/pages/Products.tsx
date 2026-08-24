@@ -1,19 +1,19 @@
 import AdminShell from "@/components/layout/Adminshell";
 import "@/App.css";
 
-function Index() {
+function Products() {
   return (
-    <AdminShell title="Dashboard">
+    <AdminShell title="Products">
       <div className="ad-card p-6">
         <h2 className="text-lg font-bold" style={{ color: "var(--ad-fg)" }}>
-          Welcome to Grocy
+          Products
         </h2>
         <p className="text-sm mt-1" style={{ color: "var(--ad-muted)" }}>
-          Manage your inventory, stock, and operations.
+          Manage your product catalog.
         </p>
       </div>
     </AdminShell>
   );
 }
 
-export default Index;
+export default Products;

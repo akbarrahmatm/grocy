@@ -1,24 +1,23 @@
 import {
   LayoutDashboard,
   Users,
-  Shield,
-  Settings,
-  ScrollText,
-  FileBarChart,
-  LifeBuoy,
-  FolderKanban,
+  Package,
 } from "lucide-react";
 import type { NavItem, Notification } from "../types";
 
 export const NAV_ITEMS: NavItem[] = [
   { to: "/", label: "Dashboard", icon: LayoutDashboard, exact: true },
-  { to: "/projects", label: "Projects", icon: FolderKanban, exact: false },
+  {
+    to: "/products",
+    label: "Products",
+    icon: Package,
+    exact: false,
+    children: [
+      { to: "/products", label: "Products" },
+      { to: "/categories", label: "Categories" },
+    ],
+  },
   { to: "/users", label: "Users", icon: Users, exact: false },
-  { to: "/roles", label: "Roles & Permissions", icon: Shield, exact: false },
-  { to: "/settings", label: "System Settings", icon: Settings, exact: false },
-  { to: "/logs", label: "Activity Logs", icon: ScrollText, exact: false },
-  { to: "/reports", label: "Reports", icon: FileBarChart, exact: false },
-  { to: "/tickets", label: "Support Tickets", icon: LifeBuoy, exact: false },
 ];
 
 export const NOTIFICATIONS: Notification[] = [

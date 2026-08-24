@@ -1,6 +1,9 @@
 import { useState } from "react";
-import { Bell, Menu, Moon, Search, Sun } from "lucide-react";
+import { Bell, LogOut, Menu, Moon, Search, Sun } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import { NOTIFICATIONS } from "@/lib/constants";
+import { authApi, clearSession } from "@/lib/api";
+import { useToast } from "@/hooks/useToast";
 
 interface NavbarProps {
   title: string;
@@ -16,6 +19,19 @@ export default function Navbar({
   onOpenSidebar,
 }: NavbarProps) {
   const [notifOpen, setNotifOpen] = useState(false);
+  const navigate = useNavigate();
+  const { push } = useToast();
+
+  async function handleLogout() {
+    try {
+      await authApi.logout();
+    } catch {
+      // ignore server errors; session is cleared client-side
+    }
+    clearSession();
+    push("Logged out");
+    navigate("/login", { replace: true });
+  }
 
   return (
     <header
@@ -105,6 +121,15 @@ export default function Navbar({
           className="p-2 rounded-md hover:bg-black/5 dark:hover:bg-white/10"
         >
           {dark ? <Sun size={18} /> : <Moon size={18} />}
+        </button>
+
+        {/* Logout */}
+        <button
+          onClick={handleLogout}
+          title="Log out"
+          className="p-2 rounded-md hover:bg-black/5 dark:hover:bg-white/10"
+        >
+          <LogOut size={18} />
         </button>
       </div>
     </header>
