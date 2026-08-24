@@ -42,6 +42,11 @@
   border-right: 1px solid var(--ad-border);
 }
 
+.ad-sidebar a,
+.ad-sidebar button {
+  cursor: pointer;
+}
+
 .ad-card {
   background: var(--ad-card);
   border: 1px solid var(--ad-border);

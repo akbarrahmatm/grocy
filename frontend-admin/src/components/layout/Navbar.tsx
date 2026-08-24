@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Bell, LogOut, Menu, Moon, Search, Sun } from "lucide-react";
+import { Bell, LogOut, Menu, Moon, Sun } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { NOTIFICATIONS } from "@/lib/constants";
 import { authApi, clearSession } from "@/lib/api";
@@ -35,7 +35,7 @@ export default function Navbar({
 
   return (
     <header
-      className="sticky top-0 z-20 px-4 md:px-6 py-3 flex items-center gap-3 border-b backdrop-blur"
+      className="sticky top-0 z-20 px-4 md:px-6 h-16 flex items-center gap-3 border-b backdrop-blur"
       style={{
         borderColor: "var(--ad-border)",
         background: "var(--ad-header-bg)",
@@ -48,24 +48,6 @@ export default function Navbar({
       <h1 className="text-lg font-bold mr-2" style={{ color: "var(--ad-fg)" }}>
         {title}
       </h1>
-
-      {/* Search */}
-      <div className="flex-1 max-w-md relative hidden sm:block">
-        <Search
-          size={16}
-          className="absolute left-3 top-1/2 -translate-y-1/2"
-          style={{ color: "var(--ad-muted)" }}
-        />
-        <input
-          placeholder="Search projects, users, invoices…"
-          className="w-full pl-9 pr-3 py-2 rounded-md text-sm border outline-none focus:border-blue-500"
-          style={{
-            background: "var(--ad-card)",
-            borderColor: "var(--ad-border)",
-            color: "var(--ad-fg)",
-          }}
-        />
-      </div>
 
       {/* Actions */}
       <div className="ml-auto flex items-center gap-2 relative">

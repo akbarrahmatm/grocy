@@ -6,6 +6,7 @@ import { clearSession, getSessionUser, isAuthenticated } from "@/lib/api";
 const Index = lazy(() => import("@/pages/Index"));
 const Products = lazy(() => import("@/pages/Products"));
 const Categories = lazy(() => import("@/pages/Categories"));
+const Users = lazy(() => import("@/pages/Users"));
 const Login = lazy(() => import("@/pages/Login"));
 const NotFound = lazy(() => import("@/pages/NotFound"));
 
@@ -93,6 +94,30 @@ function App() {
             element={
               <RequireAuth>
                 <Categories />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/users"
+            element={
+              <RequireAuth>
+                <Users />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/users/admin"
+            element={
+              <RequireAuth>
+                <Users role="ADMIN" />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/users/customer"
+            element={
+              <RequireAuth>
+                <Users role="CUSTOMER" />
               </RequireAuth>
             }
           />

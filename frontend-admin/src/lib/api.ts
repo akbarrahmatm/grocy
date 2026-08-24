@@ -1,4 +1,4 @@
-import type { AuthResponse, AuthUser } from "@/types";
+import type { AuthResponse, AuthUser, Paginated } from "@/types";
 
 const API_BASE = "http://127.0.0.1:8000/api";
 const TOKEN_KEY = "grocy_token";
@@ -83,4 +83,30 @@ export const authApi = {
   logout: () =>
     request<{ message: string }>("/auth/logout", { method: "POST" }),
   me: () => request<AuthUser>("/auth/me"),
+};
+
+export const userApi = {
+  list: (
+    opts: { role?: "admin" | "customer"; search?: string; page?: number } = {}
+  ) => {
+    const params = new URLSearchParams();
+    if (opts.role) params.set("role", opts.role);
+    if (opts.search) params.set("search", opts.search);
+    if (opts.page && opts.page > 1) params.set("page", String(opts.page));
+    const qs = params.toString();
+    return request<Paginated<AuthUser>>(`/user${qs ? `?${qs}` : ""}`);
+  },
+  create: (payload: {
+    name: string;
+    email: string;
+    password: string;
+    is_customer: boolean;
+  }) =>
+    request<AuthUser>("/user", {
+      method: "POST",
+      body: JSON.stringify({
+        ...payload,
+        is_customer: payload.is_customer ? 1 : 0,
+      }),
+    }),
 };
