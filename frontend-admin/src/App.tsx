@@ -13,6 +13,7 @@ const StockAdjustment = lazy(() => import("@/pages/Inventory/StockAdjustment"));
 const StockMovement = lazy(() => import("@/pages/Inventory/StockMovement"));
 const PaymentGateway = lazy(() => import("@/pages/Settings/PaymentGateway"));
 const Shipment = lazy(() => import("@/pages/Settings/Shipment"));
+const Orders = lazy(() => import("@/pages/Orders"));
 const Login = lazy(() => import("@/pages/Login"));
 const NotFound = lazy(() => import("@/pages/NotFound"));
 
@@ -172,6 +173,14 @@ function App() {
             element={
               <RequireAuth>
                 <Shipment />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/orders"
+            element={
+              <RequireAuth>
+                <Orders />
               </RequireAuth>
             }
           />

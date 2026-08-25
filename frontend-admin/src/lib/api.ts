@@ -1,8 +1,10 @@
 import type {
+  Address,
   AuthResponse,
   AuthUser,
   Category,
   Integration,
+  Order,
   Paginated,
   Product,
   StockAdjustment,
@@ -216,4 +218,34 @@ export const settingsApi = {
         body: JSON.stringify(payload),
       }
     ),
+};
+
+export const addressApi = {
+  list: () => request<Address[]>("/address"),
+  create: (payload: Record<string, unknown>) =>
+    request<Address>("/address", {
+      method: "POST",
+      body: JSON.stringify(payload),
+    }),
+  update: (id: number, payload: Record<string, unknown>) =>
+    request<Address>(`/address/${id}`, {
+      method: "PUT",
+      body: JSON.stringify(payload),
+    }),
+  remove: (id: number) =>
+    request<{ message: string }>(`/address/${id}`, { method: "DELETE" }),
+};
+
+export const orderApi = {
+  list: (opts: { search?: string; page?: number } = {}) =>
+    request<Paginated<Order>>(`/order?${queryString(opts)}`),
+  create: (payload: {
+    address_id: number;
+    note?: string;
+    items: { product_id: number; qty: number }[];
+  }) =>
+    request<Order>("/order", {
+      method: "POST",
+      body: JSON.stringify(payload),
+    }),
 };

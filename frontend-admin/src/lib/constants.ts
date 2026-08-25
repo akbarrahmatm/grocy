@@ -1,8 +1,22 @@
-import { LayoutDashboard, Users, Package, Warehouse, Settings } from "lucide-react";
+import {
+  LayoutDashboard,
+  Users,
+  Package,
+  Warehouse,
+  Settings,
+  ShoppingCart,
+} from "lucide-react";
 import type { NavItem, Notification } from "../types";
 
 export const NAV_ITEMS: NavItem[] = [
   { to: "/", label: "Dashboard", icon: LayoutDashboard, exact: true },
+  {
+    to: "/orders",
+    label: "Order Managements",
+    icon: ShoppingCart,
+    exact: false,
+    children: [{ to: "/orders", label: "Order" }],
+  },
   {
     to: "/products",
     label: "Product Managements",
@@ -27,7 +41,7 @@ export const NAV_ITEMS: NavItem[] = [
   },
   {
     to: "/users",
-    label: "User Management",
+    label: "User Managements",
     icon: Users,
     exact: false,
     children: [
