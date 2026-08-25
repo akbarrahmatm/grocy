@@ -9,6 +9,7 @@ import BottomNav from "@/components/BottomNav";
 import { useAuth } from "@/context/AuthContext";
 import { useCart } from "@/context/CartContext";
 import { useToast } from "@/hooks/useToast";
+import { useDebouncedValue } from "@/hooks/useDebouncedValue";
 import { productApi } from "@/lib/api";
 import type { Product } from "@/types";
 
@@ -25,14 +26,20 @@ export default function Explore() {
   const [activeCategory, setActiveCategory] = useState(ALL);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(false);
+  const debouncedQuery = useDebouncedValue(query, 300);
 
   const sentinelRef = useRef<HTMLDivElement | null>(null);
   const pageRef = useRef(1);
 
   useEffect(() => {
+    pageRef.current = 1;
+    setPage(1);
+  }, [debouncedQuery]);
+
+  useEffect(() => {
     let cancelled = false;
     productApi
-      .list({ page })
+      .list({ page, search: debouncedQuery.trim() || undefined })
       .then((res) => {
         if (cancelled) return;
         const active = res.data.filter((p) => p.is_active);
@@ -41,12 +48,14 @@ export default function Explore() {
       })
       .catch((err) => {
         if (!cancelled)
-          setError(err instanceof Error ? err.message : "Failed to load products");
+          setError(
+            err instanceof Error ? err.message : "Failed to load products"
+          );
       });
     return () => {
       cancelled = true;
     };
-  }, [page]);
+  }, [page, debouncedQuery]);
 
   useEffect(() => {
     const el = sentinelRef.current;
@@ -74,13 +83,10 @@ export default function Explore() {
   }, [products]);
 
   const filtered = useMemo(() => {
-    return products.filter((p) => {
-      const matchesCategory =
-        activeCategory === ALL || p.category?.name === activeCategory;
-      const matchesQuery = p.name.toLowerCase().includes(query.trim().toLowerCase());
-      return matchesCategory && matchesQuery;
-    });
-  }, [products, query, activeCategory]);
+    return products.filter(
+      (p) => activeCategory === ALL || p.category?.name === activeCategory
+    );
+  }, [products, activeCategory]);
 
   const toggleCart = async (id: number) => {
     if (!user) {
@@ -101,7 +107,10 @@ export default function Explore() {
       await add(id);
       push("Added to cart");
     } catch (err) {
-      push(err instanceof Error ? err.message : "Failed to add to cart", "error");
+      push(
+        err instanceof Error ? err.message : "Failed to add to cart",
+        "error"
+      );
     }
   };
 
@@ -121,7 +130,10 @@ export default function Explore() {
     try {
       await setQty(item.id, item.qty + delta);
     } catch (err) {
-      push(err instanceof Error ? err.message : "Failed to update quantity", "error");
+      push(
+        err instanceof Error ? err.message : "Failed to update quantity",
+        "error"
+      );
     }
   };
 
@@ -160,7 +172,9 @@ export default function Explore() {
           </div>
           {hasMore && (
             <div ref={sentinelRef} className="py-4 text-center">
-              <span className="text-xs text-[var(--ink-soft)]">Loading more…</span>
+              <span className="text-xs text-[var(--ink-soft)]">
+                Loading more…
+              </span>
             </div>
           )}
         </>
