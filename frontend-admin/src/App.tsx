@@ -8,6 +8,9 @@ const Products = lazy(() => import("@/pages/Products"));
 const Categories = lazy(() => import("@/pages/Categories"));
 const Users = lazy(() => import("@/pages/Users"));
 const Uoms = lazy(() => import("@/pages/Uoms"));
+const Stock = lazy(() => import("@/pages/Inventory/Stock"));
+const StockAdjustment = lazy(() => import("@/pages/Inventory/StockAdjustment"));
+const StockMovement = lazy(() => import("@/pages/Inventory/StockMovement"));
 const Login = lazy(() => import("@/pages/Login"));
 const NotFound = lazy(() => import("@/pages/NotFound"));
 
@@ -127,6 +130,30 @@ function App() {
             element={
               <RequireAuth>
                 <Users role="CUSTOMER" />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/inventory/stock"
+            element={
+              <RequireAuth>
+                <Stock />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/inventory/stock-adjustment"
+            element={
+              <RequireAuth>
+                <StockAdjustment />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/inventory/stock-movement"
+            element={
+              <RequireAuth>
+                <StockMovement />
               </RequireAuth>
             }
           />

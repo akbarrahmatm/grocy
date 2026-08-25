@@ -4,6 +4,8 @@ import type {
   Category,
   Paginated,
   Product,
+  StockAdjustment,
+  StockMovement,
   Uom,
 } from "@/types";
 
@@ -171,4 +173,23 @@ export const productApi = {
     }),
   remove: (id: number) =>
     request<{ message: string }>(`/product/${id}`, { method: "DELETE" }),
+};
+
+export const stockAdjustmentApi = {
+  list: (opts: { search?: string; page?: number } = {}) =>
+    request<Paginated<StockAdjustment>>(
+      `/inventory/stock-adjustment?${queryString(opts)}`
+    ),
+  create: (payload: Record<string, unknown>) =>
+    request<StockAdjustment>("/inventory/stock-adjustment", {
+      method: "POST",
+      body: JSON.stringify(payload),
+    }),
+};
+
+export const stockMovementApi = {
+  list: (opts: { search?: string; page?: number } = {}) =>
+    request<Paginated<StockMovement>>(
+      `/inventory/stock-movement?${queryString(opts)}`
+    ),
 };

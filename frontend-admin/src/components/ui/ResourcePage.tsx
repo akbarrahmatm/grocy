@@ -17,6 +17,7 @@ export interface ResourceField {
   initial?: string;
   optional?: boolean;
   readonly?: boolean;
+  stringValues?: boolean;
 }
 
 interface OptionItem {
@@ -33,12 +34,13 @@ interface ResourcePageProps<T> {
   fields: ResourceField[];
   renderRow: (item: T) => ReactNode[];
   list: (opts: { search?: string; page?: number }) => Promise<Paginated<T>>;
-  create: (payload: Record<string, unknown>) => Promise<{ name?: string }>;
+  create?: (payload: Record<string, unknown>) => Promise<unknown>;
   update?: (id: number, payload: Record<string, unknown>) => Promise<{ name?: string }>;
   remove?: (id: number) => Promise<unknown>;
   getId?: (item: T) => number;
   selectOptions?: Record<string, OptionItem[]>;
   emptyText?: string;
+  readOnly?: boolean;
 }
 
 export default function ResourcePage<T>({
@@ -56,6 +58,7 @@ export default function ResourcePage<T>({
   getId,
   selectOptions = {},
   emptyText = "No records.",
+  readOnly = false,
 }: ResourcePageProps<T>) {
   const { push } = useToast();
   const [query, setQuery] = useState("");
@@ -81,7 +84,7 @@ export default function ResourcePage<T>({
   const [deleteTarget, setDeleteTarget] = useState<number | null>(null);
   const [deleting, setDeleting] = useState(false);
 
-  const showActions = Boolean(update && remove && getId);
+  const showActions = Boolean(update && remove && getId) && !readOnly;
 
   function valueOf(item: T, name: string): string {
     const v = (item as unknown as Record<string, unknown>)[name];
@@ -153,15 +156,15 @@ export default function ResourcePage<T>({
         const v = form[f.name] ?? "";
         if (f.type === "switch") payload[f.name] = v === "true";
         else if (f.type === "number") payload[f.name] = v === "" ? undefined : Number(v);
-        else if (f.type === "select") payload[f.name] = v ? Number(v) : undefined;
+        else if (f.type === "select") payload[f.name] = f.stringValues ? (v || undefined) : v ? Number(v) : undefined;
         else payload[f.name] = v || undefined;
       }
       if (editingId !== null && update && getId) {
         const updated = await update(editingId, payload);
         push(`${updated.name ?? singular} updated`);
-      } else {
-        const created = await create(payload);
-        push(`${created.name ?? singular} added`);
+      } else if (create) {
+        const created = await create(payload) as { name?: string } | undefined;
+        push(`${created?.name ?? singular} added`);
       }
       setShowModal(false);
       setEditingId(null);
@@ -229,10 +232,12 @@ export default function ResourcePage<T>({
             />
           </div>
 
-          <button onClick={openCreate} className="ad-btn">
-            <Plus size={16} />
-            Add {singular}
-          </button>
+          {!readOnly && (
+            <button onClick={openCreate} className="ad-btn">
+              <Plus size={16} />
+              Add {singular}
+            </button>
+          )}
         </div>
 
         {loading ? (
@@ -348,7 +353,7 @@ export default function ResourcePage<T>({
         )}
       </div>
 
-      {showModal && (
+      {!readOnly && showModal && (
         <div
           className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center px-4"
           onClick={() => { setShowModal(false); setEditingId(null); }}

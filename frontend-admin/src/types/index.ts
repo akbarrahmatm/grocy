@@ -66,9 +66,34 @@ export interface Product {
   sku: string;
   description: string | null;
   price: string;
+  stock: number;
   is_active: boolean;
   category?: { id: number; name: string };
   uom?: { id: number; name: string; code: string };
+  created_at: string | null;
+  updated_at: string | null;
+}
+
+export interface StockAdjustment {
+  id: number;
+  product_id: number;
+  type: "in" | "out";
+  qty: number;
+  note: string | null;
+  product?: { id: number; name: string; sku: string };
+  created_at: string | null;
+  updated_at: string | null;
+}
+
+export interface StockMovement {
+  id: number;
+  product_id: number;
+  type: "in" | "out";
+  qty: number;
+  ref_type: string | null;
+  ref_id: number | null;
+  note: string | null;
+  product?: { id: number; name: string; sku: string };
   created_at: string | null;
   updated_at: string | null;
 }
