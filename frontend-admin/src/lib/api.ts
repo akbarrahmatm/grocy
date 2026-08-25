@@ -1,4 +1,14 @@
-import type { AuthResponse, AuthUser, Paginated } from "@/types";
+import type {
+  AuthResponse,
+  AuthUser,
+  Category,
+  Integration,
+  Paginated,
+  Product,
+  StockAdjustment,
+  StockMovement,
+  Uom,
+} from "@/types";
 
 const API_BASE = "http://127.0.0.1:8000/api";
 const TOKEN_KEY = "grocy_token";
@@ -85,6 +95,13 @@ export const authApi = {
   me: () => request<AuthUser>("/auth/me"),
 };
 
+function queryString(opts: { search?: string; page?: number } = {}): string {
+  const params = new URLSearchParams();
+  if (opts.search) params.set("search", opts.search);
+  if (opts.page && opts.page > 1) params.set("page", String(opts.page));
+  return params.toString();
+}
+
 export const userApi = {
   list: (
     opts: { role?: "admin" | "customer"; search?: string; page?: number } = {}
@@ -93,8 +110,7 @@ export const userApi = {
     if (opts.role) params.set("role", opts.role);
     if (opts.search) params.set("search", opts.search);
     if (opts.page && opts.page > 1) params.set("page", String(opts.page));
-    const qs = params.toString();
-    return request<Paginated<AuthUser>>(`/user${qs ? `?${qs}` : ""}`);
+    return request<Paginated<AuthUser>>(`/user?${params.toString()}`);
   },
   create: (payload: {
     name: string;
@@ -109,4 +125,95 @@ export const userApi = {
         is_customer: payload.is_customer ? 1 : 0,
       }),
     }),
+};
+
+export const categoryApi = {
+  list: (opts: { search?: string; page?: number } = {}) =>
+    request<Paginated<Category>>(`/category?${queryString(opts)}`),
+  create: (payload: Record<string, unknown>) =>
+    request<Category>("/category", {
+      method: "POST",
+      body: JSON.stringify(payload),
+    }),
+  update: (id: number, payload: Record<string, unknown>) =>
+    request<Category>(`/category/${id}`, {
+      method: "PUT",
+      body: JSON.stringify(payload),
+    }),
+  remove: (id: number) => request<{ message: string }>(`/category/${id}`, { method: "DELETE" }),
+};
+
+export const uomApi = {
+  list: (opts: { search?: string; page?: number } = {}) =>
+    request<Paginated<Uom>>(`/uom?${queryString(opts)}`),
+  create: (payload: Record<string, unknown>) =>
+    request<Uom>("/uom", {
+      method: "POST",
+      body: JSON.stringify(payload),
+    }),
+  update: (id: number, payload: Record<string, unknown>) =>
+    request<Uom>(`/uom/${id}`, {
+      method: "PUT",
+      body: JSON.stringify(payload),
+    }),
+  remove: (id: number) => request<{ message: string }>(`/uom/${id}`, { method: "DELETE" }),
+};
+
+export const productApi = {
+  list: (opts: { search?: string; page?: number } = {}) =>
+    request<Paginated<Product>>(`/product?${queryString(opts)}`),
+  create: (payload: Record<string, unknown>) =>
+    request<Product>("/product", {
+      method: "POST",
+      body: JSON.stringify(payload),
+    }),
+  update: (id: number, payload: Record<string, unknown>) =>
+    request<Product>(`/product/${id}`, {
+      method: "PUT",
+      body: JSON.stringify(payload),
+    }),
+  remove: (id: number) =>
+    request<{ message: string }>(`/product/${id}`, { method: "DELETE" }),
+};
+
+export const stockAdjustmentApi = {
+  list: (opts: { search?: string; page?: number } = {}) =>
+    request<Paginated<StockAdjustment>>(
+      `/inventory/stock-adjustment?${queryString(opts)}`
+    ),
+  create: (payload: Record<string, unknown>) =>
+    request<StockAdjustment>("/inventory/stock-adjustment", {
+      method: "POST",
+      body: JSON.stringify(payload),
+    }),
+};
+
+export const stockMovementApi = {
+  list: (opts: { search?: string; page?: number } = {}) =>
+    request<Paginated<StockMovement>>(
+      `/inventory/stock-movement?${queryString(opts)}`
+    ),
+};
+
+export interface GatewayPayload {
+  environment?: string;
+  is_active?: boolean;
+  config: Record<string, string>;
+}
+
+export const settingsApi = {
+  gateways: () => request<Integration[]>("/settings/gateways"),
+  update: (provider: string, payload: GatewayPayload) =>
+    request<Integration>(`/settings/gateways/${provider}`, {
+      method: "PUT",
+      body: JSON.stringify(payload),
+    }),
+  test: (provider: string, payload: GatewayPayload) =>
+    request<{ ok: boolean; message: string }>(
+      `/settings/gateways/${provider}/test`,
+      {
+        method: "POST",
+        body: JSON.stringify(payload),
+      }
+    ),
 };

@@ -41,7 +41,8 @@ function isActive(item: NavItem, pathname: string): boolean {
 export default function Sidebar({ open, onClose }: SidebarProps) {
   const { pathname } = useLocation();
   const user = getSessionUser();
-  const [openGroups, setOpenGroups] = useState<Record<string, boolean>>(loadGroups);
+  const [openGroups, setOpenGroups] =
+    useState<Record<string, boolean>>(loadGroups);
   const [collapsed, setCollapsed] = useState(loadCollapsed);
 
   function toggleGroup(to: string) {
@@ -133,9 +134,20 @@ export default function Sidebar({ open, onClose }: SidebarProps) {
 
             if (item.children) {
               const groupOpen = openGroups[item.to] ?? true;
-              const childActive = item.children.some(
-                (c) => pathname === c.to || pathname.startsWith(c.to + "/")
-              );
+              const matchedChildren = item.children
+                .map((c) => ({
+                  child: c,
+                  depth:
+                    pathname === c.to
+                      ? c.to.length + 1
+                      : pathname.startsWith(c.to + "/")
+                      ? c.to.length
+                      : -1,
+                }))
+                .filter((m) => m.depth >= 0)
+                .sort((a, b) => b.depth - a.depth);
+              const activeChild = matchedChildren[0]?.child ?? null;
+              const childActive = activeChild !== null;
               const active =
                 collapsed && childActive
                   ? true
@@ -147,10 +159,14 @@ export default function Sidebar({ open, onClose }: SidebarProps) {
                     title={collapsed ? item.label : undefined}
                     className={`w-full flex items-center rounded-md text-sm text-left relative transition-colors ${
                       active || childActive ? "font-bold" : "font-medium"
-                    } ${collapsed ? "justify-center px-0 py-2" : "gap-3 px-3 py-2"}`}
+                    } ${
+                      collapsed ? "justify-center px-0 py-2" : "gap-3 px-3 py-2"
+                    }`}
                     style={{
                       color: active ? "var(--ad-fg)" : "var(--ad-muted)",
-                      background: active ? "var(--ad-active-bg)" : "transparent",
+                      background: active
+                        ? "var(--ad-active-bg)"
+                        : "transparent",
                     }}
                   >
                     <Icon size={17} />
@@ -183,9 +199,7 @@ export default function Sidebar({ open, onClose }: SidebarProps) {
                       style={{ borderColor: "var(--ad-border)" }}
                     >
                       {item.children.map((child) => {
-                        const active =
-                          pathname === child.to ||
-                          pathname.startsWith(child.to + "/");
+                        const active = activeChild?.to === child.to;
                         return (
                           <Link
                             key={child.to}
@@ -264,7 +278,10 @@ export default function Sidebar({ open, onClose }: SidebarProps) {
               </div>
               <span
                 className="inline-flex items-center px-1.5 py-0.5 rounded-full text-[0.65rem] font-semibold mt-0.5"
-                style={{ color: "#3B82F6", background: "rgba(59,130,246,0.15)" }}
+                style={{
+                  color: "#3B82F6",
+                  background: "rgba(59,130,246,0.15)",
+                }}
               >
                 {user && user.is_customer ? "CUSTOMER" : "ADMIN"}
               </span>
