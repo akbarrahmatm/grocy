@@ -1,3 +1,11 @@
+import { API_URL } from "@/lib/config";
+
+export function resolveImageUrl(path: string | null | undefined): string | null {
+  if (!path) return null;
+  if (/^https?:\/\//i.test(path)) return path;
+  return `${API_URL}/storage/${path.replace(/^\/+/, "")}`;
+}
+
 export function cn(...classes: (string | false | null | undefined)[]) {
   return classes.filter(Boolean).join(" ");
 }

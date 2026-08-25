@@ -1,10 +1,23 @@
-import { lazy, Suspense, type ReactNode } from "react";
-import { BrowserRouter, Navigate, Route, Routes, useNavigate } from "react-router-dom";
+import { lazy, Suspense, useState, useEffect, type ReactNode } from "react";
+import {
+  BrowserRouter,
+  Navigate,
+  Route,
+  Routes,
+  useNavigate,
+} from "react-router-dom";
 import { ShieldBan } from "lucide-react";
-import { clearSession, getSessionUser, isAuthenticated } from "@/lib/api";
+import {
+  authApi,
+  clearSession,
+  getSessionUser,
+  isAuthenticated,
+} from "@/lib/api";
 
 const Index = lazy(() => import("@/pages/Index"));
 const Products = lazy(() => import("@/pages/Products"));
+const CreateProduct = lazy(() => import("@/pages/products/CreateProduct"));
+const EditProduct = lazy(() => import("@/pages/products/EditProduct"));
 const Categories = lazy(() => import("@/pages/Categories"));
 const Users = lazy(() => import("@/pages/Users"));
 const Uoms = lazy(() => import("@/pages/Uoms"));
@@ -13,6 +26,7 @@ const StockAdjustment = lazy(() => import("@/pages/Inventory/StockAdjustment"));
 const StockMovement = lazy(() => import("@/pages/Inventory/StockMovement"));
 const PaymentGateway = lazy(() => import("@/pages/Settings/PaymentGateway"));
 const Shipment = lazy(() => import("@/pages/Settings/Shipment"));
+const Orders = lazy(() => import("@/pages/Orders"));
 const Login = lazy(() => import("@/pages/Login"));
 const NotFound = lazy(() => import("@/pages/NotFound"));
 
@@ -56,6 +70,24 @@ function Forbidden() {
 }
 
 function RequireAuth({ children }: { children: ReactNode }) {
+  const navigate = useNavigate();
+  const [isAuthChecked, setIsAuthChecked] = useState(false);
+
+  useEffect(() => {
+    async function checkAuth() {
+      try {
+        await authApi.me();
+        setIsAuthChecked(true);
+      } catch {
+        clearSession();
+        navigate("/login", { replace: true });
+      }
+    }
+    checkAuth();
+  }, [navigate]);
+
+  if (!isAuthChecked) return children;
+
   if (!isAuthenticated()) return <Navigate to="/login" replace />;
   const user = getSessionUser();
   if (user?.is_customer) return <Forbidden />;
@@ -96,6 +128,22 @@ function App() {
             }
           />
           <Route
+            path="/products/create"
+            element={
+              <RequireAuth>
+                <CreateProduct />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/products/edit/:id"
+            element={
+              <RequireAuth>
+                <EditProduct />
+              </RequireAuth>
+            }
+          />
+          <Route
             path="/categories"
             element={
               <RequireAuth>
@@ -123,7 +171,7 @@ function App() {
             path="/users/admin"
             element={
               <RequireAuth>
-                <Users role="ADMIN" />
+                <Users role="ADMIN" key="users-admin" />
               </RequireAuth>
             }
           />
@@ -131,7 +179,7 @@ function App() {
             path="/users/customer"
             element={
               <RequireAuth>
-                <Users role="CUSTOMER" />
+                <Users role="CUSTOMER" key="users-customer" />
               </RequireAuth>
             }
           />
@@ -172,6 +220,14 @@ function App() {
             element={
               <RequireAuth>
                 <Shipment />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/orders"
+            element={
+              <RequireAuth>
+                <Orders />
               </RequireAuth>
             }
           />

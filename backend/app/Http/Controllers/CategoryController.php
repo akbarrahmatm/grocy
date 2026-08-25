@@ -16,9 +16,9 @@ class CategoryController extends Controller
         return response()->json($this->categories->list($request->query('search')));
     }
 
-    public function show(int $id): JsonResponse
+    public function show(int $category): JsonResponse
     {
-        return response()->json($this->categories->find($id));
+        return response()->json($this->categories->find($category));
     }
 
     public function store(CategoryStoreRequest $request): JsonResponse
@@ -26,14 +26,14 @@ class CategoryController extends Controller
         return response()->json($this->categories->create($request->validated()), 201);
     }
 
-    public function update(CategoryStoreRequest $request, int $id): JsonResponse
+    public function update(CategoryStoreRequest $request, int $category): JsonResponse
     {
-        return response()->json($this->categories->update($id, $request->validated()));
+        return response()->json($this->categories->update($category, $request->validated()));
     }
 
-    public function destroy(int $id): JsonResponse
+    public function destroy(int $category): JsonResponse
     {
-        $this->categories->delete($id);
+        $this->categories->delete($category);
 
         return response()->json(['message' => 'Category deleted.']);
     }

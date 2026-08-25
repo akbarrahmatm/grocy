@@ -65,6 +65,7 @@ export interface Product {
   slug: string;
   sku: string;
   description: string | null;
+  thumbnail: string | null;
   price: string;
   stock: number;
   is_active: boolean;
@@ -103,6 +104,52 @@ export interface Integration {
   is_active: boolean;
   environment: "sandbox" | "production";
   config: Record<string, string>;
+}
+
+export interface Address {
+  id: number;
+  user_id: number;
+  label: string;
+  receiver_name: string;
+  phone: string;
+  address: string;
+  city: string;
+  province: string;
+  postal_code: string;
+  latitude: string | null;
+  longitude: string | null;
+  is_default: boolean;
+  created_at: string | null;
+  updated_at: string | null;
+}
+
+export interface OrderItem {
+  id: number;
+  product_id: number;
+  name: string;
+  price: string;
+  qty: number;
+  subtotal: string;
+}
+
+export interface Order {
+  id: number;
+  user_id: number;
+  order_number: string;
+  status: "pending" | "paid" | "processing" | "completed" | "cancelled";
+  subtotal: string;
+  shipping_cost: string;
+  total: string;
+  snap_token: string | null;
+  snap_redirect_url: string | null;
+  transaction_id: string | null;
+  paid_at: string | null;
+  note: string | null;
+  user?: { id: number; name: string; email: string };
+  items?: OrderItem[];
+  items_count?: number;
+  created_at: string | null;
+  updated_at: string | null;
 }
 
 export interface Toast {

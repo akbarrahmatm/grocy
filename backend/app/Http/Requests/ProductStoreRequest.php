@@ -18,6 +18,7 @@ class ProductStoreRequest extends FormRequest
             'slug' => ['sometimes', 'string', 'max:180', Rule::unique('products', 'slug')->ignore($this->route('product'))],
             'sku' => ['sometimes', 'string', 'max:50', Rule::unique('products', 'sku')->ignore($this->route('product'))],
             'description' => ['sometimes', 'nullable', 'string'],
+            'thumbnail' => ['sometimes', 'nullable', 'image', 'mimes:jpg,jpeg,png,webp,gif', 'max:2048'],
             'price' => [$creating ? 'required' : 'sometimes', 'numeric', 'min:0'],
             'is_active' => ['sometimes', 'boolean'],
         ];

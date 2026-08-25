@@ -1,8 +1,10 @@
 import type {
+  Address,
   AuthResponse,
   AuthUser,
   Category,
   Integration,
+  Order,
   Paginated,
   Product,
   StockAdjustment,
@@ -10,7 +12,9 @@ import type {
   Uom,
 } from "@/types";
 
-const API_BASE = "http://127.0.0.1:8000/api";
+import { API_URL } from "@/lib/config";
+
+const API_BASE = `${API_URL}/api`;
 const TOKEN_KEY = "grocy_token";
 const USER_KEY = "grocy_user";
 
@@ -49,10 +53,11 @@ export function clearSession(): void {
 
 async function request<T>(path: string, init: RequestInit = {}): Promise<T> {
   const token = getToken();
+  const isForm = init.body instanceof FormData;
   const res = await fetch(API_BASE + path, {
     ...init,
     headers: {
-      "Content-Type": "application/json",
+      ...(isForm ? {} : { "Content-Type": "application/json" }),
       ...(token ? { Authorization: `Bearer ${token}` } : {}),
       ...init.headers,
     },
@@ -159,18 +164,21 @@ export const uomApi = {
   remove: (id: number) => request<{ message: string }>(`/uom/${id}`, { method: "DELETE" }),
 };
 
+export type ResourcePayload = Record<string, unknown> | FormData;
+
 export const productApi = {
   list: (opts: { search?: string; page?: number } = {}) =>
     request<Paginated<Product>>(`/product?${queryString(opts)}`),
-  create: (payload: Record<string, unknown>) =>
+  show: (id: number) => request<Product>(`/product/${id}`),
+  create: (payload: ResourcePayload) =>
     request<Product>("/product", {
       method: "POST",
-      body: JSON.stringify(payload),
+      body: payload instanceof FormData ? payload : JSON.stringify(payload),
     }),
-  update: (id: number, payload: Record<string, unknown>) =>
+  update: (id: number, payload: ResourcePayload) =>
     request<Product>(`/product/${id}`, {
-      method: "PUT",
-      body: JSON.stringify(payload),
+      method: "POST",
+      body: payload instanceof FormData ? payload : JSON.stringify(payload),
     }),
   remove: (id: number) =>
     request<{ message: string }>(`/product/${id}`, { method: "DELETE" }),
@@ -216,4 +224,34 @@ export const settingsApi = {
         body: JSON.stringify(payload),
       }
     ),
+};
+
+export const addressApi = {
+  list: () => request<Address[]>("/address"),
+  create: (payload: Record<string, unknown>) =>
+    request<Address>("/address", {
+      method: "POST",
+      body: JSON.stringify(payload),
+    }),
+  update: (id: number, payload: Record<string, unknown>) =>
+    request<Address>(`/address/${id}`, {
+      method: "PUT",
+      body: JSON.stringify(payload),
+    }),
+  remove: (id: number) =>
+    request<{ message: string }>(`/address/${id}`, { method: "DELETE" }),
+};
+
+export const orderApi = {
+  list: (opts: { search?: string; page?: number } = {}) =>
+    request<Paginated<Order>>(`/order?${queryString(opts)}`),
+  create: (payload: {
+    address_id: number;
+    note?: string;
+    items: { product_id: number; qty: number }[];
+  }) =>
+    request<Order>("/order", {
+      method: "POST",
+      body: JSON.stringify(payload),
+    }),
 };

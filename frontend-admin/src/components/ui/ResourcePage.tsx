@@ -1,16 +1,18 @@
-import { ChevronDown, ChevronLeft, ChevronRight, Pencil, Plus, Search, Trash2, type LucideIcon } from "lucide-react";
-import { useEffect, useState, type FormEvent, type ReactNode } from "react";
+import { ChevronDown, ChevronLeft, ChevronRight, ImagePlus, Pencil, Plus, Search, Trash2, X, type LucideIcon } from "lucide-react";
+import { useEffect, useState, type ChangeEvent, type FormEvent, type ReactNode } from "react";
+import { useNavigate } from "react-router-dom";
 import AdminShell from "@/components/layout/Adminshell";
 import Field from "@/components/ui/Field";
 import { useDebouncedValue } from "@/hooks/useDebouncedValue";
 import { useToast } from "@/hooks/useToast";
+import { resolveImageUrl } from "@/lib/utils";
 import "@/App.css";
 import type { Paginated } from "@/types";
 
 export interface ResourceField {
   name: string;
   label: string;
-  type?: "text" | "email" | "password" | "number" | "select" | "switch";
+  type?: "text" | "email" | "password" | "number" | "select" | "switch" | "file";
   placeholder?: string;
   icon?: LucideIcon;
   options?: { value: string; label: string }[];
@@ -31,13 +33,15 @@ interface ResourcePageProps<T> {
   icon: LucideIcon;
   searchPlaceholder: string;
   headers: string[];
-  fields: ResourceField[];
+  fields?: ResourceField[];
   renderRow: (item: T) => ReactNode[];
   list: (opts: { search?: string; page?: number }) => Promise<Paginated<T>>;
-  create?: (payload: Record<string, unknown>) => Promise<unknown>;
-  update?: (id: number, payload: Record<string, unknown>) => Promise<{ name?: string }>;
+  create?(payload: Record<string, unknown> | FormData): Promise<unknown>;
+  update?(id: number, payload: Record<string, unknown> | FormData): Promise<{ name?: string }>;
   remove?: (id: number) => Promise<unknown>;
   getId?: (item: T) => number;
+  createHref?: string;
+  editHref?: (item: T) => string;
   selectOptions?: Record<string, OptionItem[]>;
   emptyText?: string;
   readOnly?: boolean;
@@ -49,17 +53,20 @@ export default function ResourcePage<T>({
   icon: Icon,
   searchPlaceholder,
   headers,
-  fields,
+  fields = [],
   renderRow,
   list,
   create,
   update,
   remove,
   getId,
+  createHref,
+  editHref,
   selectOptions = {},
   emptyText = "No records.",
   readOnly = false,
 }: ResourcePageProps<T>) {
+  const navigate = useNavigate();
   const { push } = useToast();
   const [query, setQuery] = useState("");
   const debouncedQuery = useDebouncedValue(query);
@@ -81,10 +88,12 @@ export default function ResourcePage<T>({
   const [editingId, setEditingId] = useState<number | null>(null);
   const [creating, setCreating] = useState(false);
   const [form, setForm] = useState<Record<string, string>>({});
+  const [filePicks, setFilePicks] = useState<Record<string, File | null | undefined>>({});
+  const [previews, setPreviews] = useState<Record<string, string>>({});
   const [deleteTarget, setDeleteTarget] = useState<number | null>(null);
   const [deleting, setDeleting] = useState(false);
 
-  const showActions = Boolean(update && remove && getId) && !readOnly;
+  const showActions = Boolean((update || editHref) && remove && getId) && !readOnly;
 
   function valueOf(item: T, name: string): string {
     const v = (item as unknown as Record<string, unknown>)[name];
@@ -123,6 +132,8 @@ export default function ResourcePage<T>({
     const initial: Record<string, string> = {};
     for (const f of fields) initial[f.name] = f.initial ?? "";
     setForm(initial);
+    setFilePicks({});
+    setPreviews({});
     setEditingId(null);
     setShowModal(true);
   }
@@ -131,12 +142,37 @@ export default function ResourcePage<T>({
     const initial: Record<string, string> = {};
     for (const f of fields) initial[f.name] = valueOf(item, f.name);
     setForm(initial);
+    setFilePicks({});
+    setPreviews({});
     setEditingId(getId!(item));
     setShowModal(true);
   }
 
   function setField(name: string, value: string) {
     setForm((s) => ({ ...s, [name]: value }));
+  }
+
+  function handleFilePick(name: string, e: ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0] ?? null;
+    setFilePicks((s) => ({ ...s, [name]: file }));
+    setPreviews((s) => {
+      if (s[name]) URL.revokeObjectURL(s[name]);
+      const next = { ...s };
+      if (file) next[name] = URL.createObjectURL(file);
+      else delete next[name];
+      return next;
+    });
+  }
+
+  function clearFilePick(name: string) {
+    setFilePicks((s) => ({ ...s, [name]: null }));
+    setPreviews((s) => {
+      if (s[name]) URL.revokeObjectURL(s[name]);
+      const next = { ...s };
+      delete next[name];
+      return next;
+    });
+    setForm((s) => ({ ...s, [name]: "" }));
   }
 
   async function handleSubmit(e: FormEvent) {
@@ -150,15 +186,44 @@ export default function ResourcePage<T>({
     }
     setCreating(true);
     try {
-      const payload: Record<string, unknown> = {};
-      for (const f of fields) {
-        if (f.readonly) continue;
-        const v = form[f.name] ?? "";
-        if (f.type === "switch") payload[f.name] = v === "true";
-        else if (f.type === "number") payload[f.name] = v === "" ? undefined : Number(v);
-        else if (f.type === "select") payload[f.name] = f.stringValues ? (v || undefined) : v ? Number(v) : undefined;
-        else payload[f.name] = v || undefined;
+      const hasFileField = fields.some((f) => f.type === "file");
+      let payload: Record<string, unknown> | FormData;
+
+      if (hasFileField) {
+        const fd = new FormData();
+        if (editingId !== null) fd.append("_method", "PUT");
+        for (const f of fields) {
+          if (f.readonly) continue;
+          const v = form[f.name] ?? "";
+          const pick = filePicks[f.name];
+          if (f.type === "switch") fd.append(f.name, v === "true" ? "1" : "0");
+          else if (f.type === "number") {
+            if (v !== "") fd.append(f.name, v);
+          } else if (f.type === "select") {
+            if (v) fd.append(f.name, v);
+          } else if (f.type === "file") {
+            if (pick instanceof File) fd.append(f.name, pick);
+            else if (pick === null || editingId === null) fd.append(f.name, "");
+          } else {
+            if (v) fd.append(f.name, v);
+            else if (f.optional) fd.append(f.name, "");
+          }
+        }
+        payload = fd;
+      } else {
+        const json: Record<string, unknown> = {};
+        for (const f of fields) {
+          if (f.readonly) continue;
+          const v = form[f.name] ?? "";
+          if (f.type === "switch") json[f.name] = v === "true";
+          else if (f.type === "number") json[f.name] = v === "" ? undefined : Number(v);
+          else if (f.type === "select") json[f.name] = f.stringValues ? (v || undefined) : v ? Number(v) : undefined;
+          else if (f.optional) json[f.name] = v || null;
+          else json[f.name] = v || undefined;
+        }
+        payload = json;
       }
+
       if (editingId !== null && update && getId) {
         const updated = await update(editingId, payload);
         push(`${updated.name ?? singular} updated`);
@@ -233,7 +298,10 @@ export default function ResourcePage<T>({
           </div>
 
           {!readOnly && (
-            <button onClick={openCreate} className="ad-btn">
+            <button
+              onClick={() => (createHref ? navigate(createHref) : openCreate())}
+              className="ad-btn"
+            >
               <Plus size={16} />
               Add {singular}
             </button>
@@ -287,7 +355,9 @@ export default function ResourcePage<T>({
                       <td className="px-5 py-3.5">
                         <div className="flex items-center gap-1.5">
                           <button
-                            onClick={() => openEdit(item)}
+                            onClick={() =>
+                              editHref ? navigate(editHref(item)) : openEdit(item)
+                            }
                             className="p-1.5 rounded-md transition-colors hover:bg-black/5 dark:hover:bg-white/10"
                             title={`Edit ${singular}`}
                           >
@@ -401,6 +471,64 @@ export default function ResourcePage<T>({
                           color: "var(--ad-muted)",
                         }}
                       />
+                    </div>
+                  );
+                }
+                if (f.type === "file") {
+                  const cleared = filePicks[f.name] === null;
+                  const preview =
+                    previews[f.name] ??
+                    (!cleared ? resolveImageUrl(form[f.name]) : null);
+                  return (
+                    <div key={f.name}>
+                      <span
+                        className="block text-sm font-medium mb-1.5"
+                        style={{ color: "var(--ad-fg)" }}
+                      >
+                        {f.label}
+                      </span>
+                      <div className="flex items-center gap-3">
+                        {preview ? (
+                          <img
+                            src={preview}
+                            alt={f.label}
+                            className="w-16 h-16 rounded-lg object-cover flex-shrink-0"
+                            style={{ border: "1px solid var(--ad-border)" }}
+                          />
+                        ) : (
+                          <span
+                            className="w-16 h-16 rounded-lg flex items-center justify-center flex-shrink-0"
+                            style={{
+                              background: "var(--ad-active-bg)",
+                              color: "var(--ad-muted)",
+                              border: "1px dashed var(--ad-border)",
+                            }}
+                          >
+                            <ImagePlus size={18} />
+                          </span>
+                        )}
+                        <label className="ad-btn ad-btn-ghost cursor-pointer">
+                          <ImagePlus size={15} />
+                          {preview ? "Change" : "Upload image"}
+                          <input
+                            type="file"
+                            accept="image/png,image/jpeg,image/webp,image/gif"
+                            className="hidden"
+                            onChange={(e) => handleFilePick(f.name, e)}
+                          />
+                        </label>
+                        {(preview || cleared) && (
+                          <button
+                            type="button"
+                            onClick={() => clearFilePick(f.name)}
+                            className="p-2 rounded-md border transition-colors hover:bg-black/5 dark:hover:bg-white/10"
+                            style={{ borderColor: "var(--ad-border)" }}
+                            title={`Remove ${f.label}`}
+                          >
+                            <X size={15} style={{ color: "#EF4444" }} />
+                          </button>
+                        )}
+                      </div>
                     </div>
                   );
                 }

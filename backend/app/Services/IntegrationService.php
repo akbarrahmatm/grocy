@@ -11,7 +11,7 @@ class IntegrationService
 {
     public function ensureDefaults(): void
     {
-        foreach (['midtrans', 'biteship'] as $provider) {
+        foreach (['midtrans', 'komship'] as $provider) {
             Integration::firstOrCreate(
                 ['provider' => $provider],
                 ['environment' => 'sandbox', 'is_active' => false]
@@ -62,7 +62,7 @@ class IntegrationService
 
         return match ($provider) {
             'midtrans' => $this->testMidtrans($config, $environment),
-            'biteship' => $this->testBiteship($config, $environment),
+            'komship' => $this->testKomship($config, $environment),
             default => throw new InvalidArgumentException('Unknown provider.'),
         };
     }
@@ -92,27 +92,23 @@ class IntegrationService
             : ['ok' => false, 'message' => $res->json('error_messages.0') ?? 'Connection failed (' . $res->status() . ').'];
     }
 
-    private function testBiteship(array $config, string $environment): array
+    private function testKomship(array $config, string $environment): array
     {
         $apiKey = $config['api_key'] ?? '';
         if ($apiKey === '' || str_contains($apiKey, '•')) {
             return ['ok' => false, 'message' => 'API key is required.'];
         }
 
-        $res = Http::withHeaders(['Authorization' => $apiKey])
-            ->asJson()
-            ->send('GET', 'https://api.biteship.com/v1/couriers', [
-                'json' => [
-                    'origin_latitude' => '-6.291974',
-                    'origin_longitude' => '106.801207',
-                    'destination_latitude' => '-6.288941',
-                    'destination_longitude' => '106.806473',
-                    'couriers' => 'grab,gojek',
-                ],
-            ]);
+        $base = $environment === 'production'
+            ? 'https://collaborator.komerce.id'
+            : 'https://api-sandbox.collaborator.komerce.id';
+
+        $res = Http::withHeaders(['x-api-key' => $apiKey])
+            ->acceptJson()
+            ->get($base.'/tariff/api/v1/destination/search', ['keyword' => 'jakarta']);
 
         return $res->successful()
-            ? ['ok' => true, 'message' => 'Biteship connected.']
-            : ['ok' => false, 'message' => $res->json('message') ?? 'Connection failed (' . $res->status() . ').'];
+            ? ['ok' => true, 'message' => 'Komship connected.']
+            : ['ok' => false, 'message' => $res->json('message') ?? 'Connection failed ('.$res->status().').'];
     }
 }

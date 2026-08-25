@@ -16,9 +16,9 @@ class UomController extends Controller
         return response()->json($this->uoms->list($request->query('search')));
     }
 
-    public function show(int $id): JsonResponse
+    public function show(int $uom): JsonResponse
     {
-        return response()->json($this->uoms->find($id));
+        return response()->json($this->uoms->find($uom));
     }
 
     public function store(UomStoreRequest $request): JsonResponse
@@ -26,14 +26,14 @@ class UomController extends Controller
         return response()->json($this->uoms->create($request->validated()), 201);
     }
 
-    public function update(UomStoreRequest $request, int $id): JsonResponse
+    public function update(UomStoreRequest $request, int $uom): JsonResponse
     {
-        return response()->json($this->uoms->update($id, $request->validated()));
+        return response()->json($this->uoms->update($uom, $request->validated()));
     }
 
-    public function destroy(int $id): JsonResponse
+    public function destroy(int $uom): JsonResponse
     {
-        $this->uoms->delete($id);
+        $this->uoms->delete($uom);
 
         return response()->json(['message' => 'UOM deleted.']);
     }

@@ -16,9 +16,9 @@ class ProductController extends Controller
         return response()->json($this->products->list($request->query('search')));
     }
 
-    public function show(int $id): JsonResponse
+    public function show(int $product): JsonResponse
     {
-        return response()->json($this->products->find($id));
+        return response()->json($this->products->find($product));
     }
 
     public function store(ProductStoreRequest $request): JsonResponse
@@ -26,14 +26,14 @@ class ProductController extends Controller
         return response()->json($this->products->create($request->validated()), 201);
     }
 
-    public function update(ProductStoreRequest $request, int $id): JsonResponse
+    public function update(ProductStoreRequest $request, int $product): JsonResponse
     {
-        return response()->json($this->products->update($id, $request->validated()));
+        return response()->json($this->products->update($product, $request->validated()));
     }
 
-    public function destroy(int $id): JsonResponse
+    public function destroy(int $product): JsonResponse
     {
-        $this->products->delete($id);
+        $this->products->delete($product);
 
         return response()->json(['message' => 'Product deleted.']);
     }
