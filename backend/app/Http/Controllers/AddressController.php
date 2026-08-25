@@ -21,14 +21,14 @@ class AddressController extends Controller
         return response()->json($this->addresses->create($request->user(), $request->validated()), 201);
     }
 
-    public function update(int $id, AddressStoreRequest $request): JsonResponse
+    public function update(int $address, AddressStoreRequest $request): JsonResponse
     {
-        return response()->json($this->addresses->update($request->user(), $id, $request->validated()));
+        return response()->json($this->addresses->update($request->user(), $address, $request->validated()));
     }
 
-    public function destroy(int $id, Request $request): JsonResponse
+    public function destroy(int $address, Request $request): JsonResponse
     {
-        $this->addresses->delete($request->user(), $id);
+        $this->addresses->delete($request->user(), $address);
 
         return response()->json(['message' => 'Address deleted.']);
     }
