@@ -4,12 +4,22 @@ import { isAuthenticated } from "@/lib/api";
 
 const Explore = lazy(() => import("@/pages/Explore"));
 const Login = lazy(() => import("@/pages/Login"));
+const Register = lazy(() => import("@/pages/Register"));
+const Cart = lazy(() => import("@/pages/Cart"));
+const Checkout = lazy(() => import("@/pages/Checkout"));
+const Orders = lazy(() => import("@/pages/Orders"));
+const OrderDetail = lazy(() => import("@/pages/OrderDetail"));
+const OrderComplete = lazy(() => import("@/pages/OrderComplete"));
+const Profile = lazy(() => import("@/pages/Profile"));
+const Addresses = lazy(() => import("@/pages/Addresses"));
+const CreateAddress = lazy(() => import("@/pages/CreateAddress"));
+const EditAddress = lazy(() => import("@/pages/EditAddress"));
 const NotFound = lazy(() => import("@/pages/NotFound"));
 
 function Loading() {
   return (
     <div className="phone flex items-center justify-center min-h-screen">
-      <span className="text-2xl">🌾</span>
+      <span className="brand">Grocy</span>
     </div>
   );
 }
@@ -32,6 +42,23 @@ function App() {
               </GuestOnly>
             }
           />
+          <Route
+            path="/register"
+            element={
+              <GuestOnly>
+                <Register />
+              </GuestOnly>
+            }
+          />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/checkout" element={<Checkout />} />
+          <Route path="/orders" element={<Orders />} />
+          <Route path="/orders/:id" element={<OrderDetail />} />
+          <Route path="/orders/:id/complete" element={<OrderComplete />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/address" element={<Addresses />} />
+          <Route path="/address/new" element={<CreateAddress />} />
+          <Route path="/address/edit/:id" element={<EditAddress />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>

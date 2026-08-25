@@ -9,19 +9,19 @@ export default function Hero({ query, onQueryChange }: HeroProps) {
   return (
     <section className="hero">
       <div className="hero-bg" />
-      <span className="hero-eyebrow">Panen hari ini</span>
+      <span className="hero-eyebrow">Harvest today</span>
       <h1>
-        Bahan segar, <em>kualitas premium</em>.
+        Fresh ingredients, <em>premium quality</em>.
       </h1>
 
       <div className="search-bar">
         <SearchIcon />
         <input
           type="text"
-          placeholder="Cari bahan makanan..."
+          placeholder="Search for food ingredients..."
           value={query}
           onChange={(e) => onQueryChange(e.target.value)}
-          aria-label="Cari bahan makanan"
+          aria-label="Search for food ingredients"
         />
       </div>
     </section>

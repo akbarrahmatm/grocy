@@ -33,12 +33,16 @@ function ToastList({ toasts }: { toasts: Toast[] }) {
       {toasts.map((t) => (
         <div
           key={t.id}
-          className="bg-surface border border-border rounded-xl px-4 py-2.5 text-sm font-medium shadow-lg animate-[fade-in_.2s_ease] flex items-center gap-2"
+          className="rounded-xl px-4 py-2.5 text-sm font-medium shadow-lg animate-[fade-in_.2s_ease] flex items-center gap-2"
+          style={{
+            background: t.variant === "error" ? "var(--coral)" : "var(--moss)",
+            color: "#fff",
+          }}
         >
           {t.variant === "error" ? (
-            <CircleAlert size={16} className="text-red-500" />
+            <CircleAlert size={16} className="shrink-0" />
           ) : (
-            <CheckCircle2 size={16} className="text-primary" />
+            <CheckCircle2 size={16} className="shrink-0" />
           )}
           {t.text}
         </div>

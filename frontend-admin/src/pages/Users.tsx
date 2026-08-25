@@ -78,7 +78,7 @@ function Users({ role }: UsersProps) {
           role: role?.toLowerCase() as "admin" | "customer" | undefined,
         })
       }
-      create={(payload) =>
+      create={(payload: Record<string, unknown>) =>
         userApi.create({
           name: String(payload.name ?? ""),
           email: String(payload.email ?? ""),

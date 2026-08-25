@@ -56,7 +56,8 @@ export const NAV_ITEMS: NavItem[] = [
     exact: false,
     children: [
       { to: "/settings/payment-gateway", label: "Payment Gateway" },
-      { to: "/settings/shipment", label: "Shipment" },
+      // hidden until the Komship API key is activated
+      // { to: "/settings/shipment", label: "Shipment" },
     ],
   },
 ];

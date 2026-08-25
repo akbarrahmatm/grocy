@@ -3,12 +3,15 @@ import type {
   AuthResponse,
   AuthUser,
   CartItem,
+  Destination,
   Order,
   Paginated,
   Product,
+  ShippingRate,
 } from "@/types";
+import { API_URL } from "@/lib/config";
 
-const API_BASE = "http://127.0.0.1:8000/api";
+const API_BASE = `${API_URL}/api`;
 const TOKEN_KEY = "grocy_token";
 const USER_KEY = "grocy_user";
 
@@ -131,19 +134,45 @@ export const cartApi = {
 
 export const addressApi = {
   list: () => request<Address[]>("/address"),
+  create: (payload: Record<string, unknown>) =>
+    request<Address>("/address", {
+      method: "POST",
+      body: JSON.stringify(payload),
+    }),
+  update: (id: number, payload: Record<string, unknown>) =>
+    request<Address>(`/address/${id}`, {
+      method: "PUT",
+      body: JSON.stringify(payload),
+    }),
+  remove: (id: number) =>
+    request<{ message: string }>(`/address/${id}`, { method: "DELETE" }),
 };
 
 export const orderApi = {
   list: (opts: { search?: string; page?: number } = {}) =>
     request<Paginated<Order>>(`/order?${queryString(opts)}`),
+  show: (id: number) => request<Order>(`/order/${id}`),
   create: (payload: {
     address_id: number;
     note?: string;
     items: { product_id: number; qty: number }[];
+    courier?: { code: string; service: string };
   }) =>
     request<Order>("/order", {
       method: "POST",
       body: JSON.stringify(payload),
+    }),
+};
+
+export const shippingApi = {
+  destinations: (q: string) =>
+    request<{ data: Destination[] }>(
+      `/shipping/destinations?q=${encodeURIComponent(q)}`
+    ),
+  rates: (address_id: number, items: { product_id: number; qty: number }[]) =>
+    request<{ data: ShippingRate[] }>("/shipping/rates", {
+      method: "POST",
+      body: JSON.stringify({ address_id, items }),
     }),
 };
 

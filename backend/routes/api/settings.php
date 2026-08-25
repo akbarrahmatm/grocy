@@ -9,7 +9,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
 Route::middleware(['auth:sanctum', 'admin'])->group(function () {
     Route::put('settings/gateways/{provider}', [IntegrationController::class, 'update'])
-        ->whereIn('provider', ['midtrans', 'biteship']);
+        ->whereIn('provider', ['midtrans', 'komship']);
     Route::post('settings/gateways/{provider}/test', [IntegrationController::class, 'test'])
-        ->whereIn('provider', ['midtrans', 'biteship']);
+        ->whereIn('provider', ['midtrans', 'komship']);
 });

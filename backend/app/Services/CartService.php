@@ -14,7 +14,10 @@ class CartService
     public function list(User $user): Collection
     {
         return CartItem::where('user_id', $user->id)
-            ->with('product:id,name,sku,price,stock,uom_id')
+            ->with([
+                'product:id,name,sku,price,stock,uom_id,thumbnail',
+                'product.uom:id,name,code',
+            ])
             ->orderByDesc('created_at')
             ->get();
     }
@@ -31,14 +34,17 @@ class CartService
 
             if ($item) {
                 $item->increment('qty', $qty);
-
-                return $item->refresh();
+            } else {
+                $item = CartItem::create([
+                    'user_id' => $user->id,
+                    'product_id' => $productId,
+                    'qty' => $qty,
+                ]);
             }
 
-            return CartItem::create([
-                'user_id' => $user->id,
-                'product_id' => $productId,
-                'qty' => $qty,
+            return $item->refresh()->load([
+                'product:id,name,sku,price,stock,uom_id,thumbnail',
+                'product.uom:id,name,code',
             ]);
         });
     }
@@ -48,7 +54,10 @@ class CartService
         $item = $this->findOrFail($user, $id);
         $item->update(['qty' => $qty]);
 
-        return $item;
+        return $item->load([
+            'product:id,name,sku,price,stock,uom_id,thumbnail',
+            'product.uom:id,name,code',
+        ]);
     }
 
     public function remove(User $user, int $id): void

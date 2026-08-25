@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "@/App.css";
 import Button from "@/components/ui/Button";
 import Field from "@/components/ui/Field";
@@ -19,10 +19,10 @@ export default function Login() {
     setLoading(true);
     try {
       await login(email, password);
-      push("Berhasil masuk");
+      push("Signed in successfully");
       navigate("/", { replace: true });
     } catch (err) {
-      push(err instanceof Error ? err.message : "Gagal masuk", "error");
+      push(err instanceof Error ? err.message : "Sign in failed", "error");
     } finally {
       setLoading(false);
     }
@@ -32,11 +32,10 @@ export default function Login() {
     <div className="phone phone-page">
       <form onSubmit={handleSubmit} className="auth-card space-y-4">
         <div className="mb-2">
-          <div className="brand">
-            <span className="brand-mark">🌾</span>
-            Grocy
-          </div>
-          <p className="text-sm text-[var(--ink-soft)] mt-3">Masuk ke akun Anda</p>
+          <div className="brand">Grocy</div>
+          <p className="text-sm text-[var(--ink-soft)] mt-3">
+            Sign in to your account
+          </p>
         </div>
 
         <Field
@@ -57,8 +56,18 @@ export default function Login() {
         />
 
         <Button type="submit" disabled={loading} className="w-full">
-          {loading ? "Masuk…" : "Masuk"}
+          {loading ? "Sign in…" : "Sign in"}
         </Button>
+
+        <p className="text-sm text-[var(--ink-soft)] text-center">
+          Doesn't have account?{" "}
+          <Link
+            to="/register"
+            className="font-semibold text-[var(--moss-dark)]"
+          >
+            Register
+          </Link>
+        </p>
       </form>
     </div>
   );

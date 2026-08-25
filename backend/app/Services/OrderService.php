@@ -15,9 +15,14 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use LogicException;
+use Throwable;
 
 class OrderService
 {
+    public function __construct(
+        private readonly ShippingService $shipping,
+    ) {}
+
     public function create(User $user, array $data): Order
     {
         $order = DB::transaction(function () use ($user, $data) {
@@ -47,6 +52,19 @@ class OrderService
                 $subtotal += (float) $product->price * $qty;
             }
 
+            $shippingCost = 0;
+            $courier = null;
+
+            if (filled($data['courier']['code'] ?? null) && filled($data['courier']['service'] ?? null)) {
+                $courier = $this->shipping->resolvePrice(
+                    $address,
+                    $data['items'],
+                    $data['courier']['code'],
+                    $data['courier']['service']
+                );
+                $shippingCost = $courier['price'];
+            }
+
             $order = Order::create([
                 'user_id' => $user->id,
                 'order_number' => $this->generateOrderNumber(),
@@ -58,9 +76,13 @@ class OrderService
                 'shipping_postal_code' => $address->postal_code,
                 'shipping_latitude' => $address->latitude,
                 'shipping_longitude' => $address->longitude,
+                'courier_company' => $courier['company'] ?? null,
+                'courier_code' => $courier['code'] ?? null,
+                'courier_service' => $courier['service'] ?? null,
+                'destination_id' => $address->destination_id,
                 'subtotal' => $subtotal,
-                'shipping_cost' => 0,
-                'total' => $subtotal,
+                'shipping_cost' => $shippingCost,
+                'total' => $subtotal + $shippingCost,
                 'note' => $data['note'] ?? null,
             ]);
 
@@ -92,7 +114,22 @@ class OrderService
             return $order;
         });
 
+        $this->pushToKomship($order);
+
         return $order->load('items');
+    }
+
+    /**
+     * Registering the shipment must never block checkout — a Komship
+     * outage only costs us the AWB, which can be pushed again later.
+     */
+    private function pushToKomship(Order $order): void
+    {
+        try {
+            $this->shipping->storeOrder($order->loadMissing('items'));
+        } catch (Throwable $e) {
+            report($e);
+        }
     }
 
     public function list(User $user, bool $admin): LengthAwarePaginator
@@ -202,6 +239,9 @@ class OrderService
                 'transaction_details' => [
                     'order_id' => $order->order_number,
                     'gross_amount' => (int) $order->total,
+                ],
+                'callbacks' => [
+                    'finish' => rtrim(config('app.frontend_url'), '/').'/orders/'.$order->id.'/complete',
                 ],
             ]);
 

@@ -1,39 +1,69 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "@/App.css";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import CategoryTabs from "@/components/CategoryTabs";
 import ProductCard from "@/components/ProductCard";
 import BottomNav from "@/components/BottomNav";
+import { useAuth } from "@/context/AuthContext";
+import { useCart } from "@/context/CartContext";
+import { useToast } from "@/hooks/useToast";
 import { productApi } from "@/lib/api";
-import { useEffect } from "react";
 import type { Product } from "@/types";
 
-const ALL = "Semua";
+const ALL = "All";
 
 export default function Explore() {
+  const { user } = useAuth();
+  const { items, count, add, setQty } = useCart();
+  const { push } = useToast();
+  const navigate = useNavigate();
   const [products, setProducts] = useState<Product[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [query, setQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState(ALL);
-  const [favorites, setFavorites] = useState<Set<number>>(new Set());
-  const [cart, setCart] = useState<Set<number>>(new Set());
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(false);
+
+  const sentinelRef = useRef<HTMLDivElement | null>(null);
+  const pageRef = useRef(1);
 
   useEffect(() => {
     let cancelled = false;
     productApi
-      .list()
+      .list({ page })
       .then((res) => {
-        if (!cancelled) setProducts(res.data.filter((p) => p.is_active));
+        if (cancelled) return;
+        const active = res.data.filter((p) => p.is_active);
+        setProducts((prev) => (page === 1 ? active : [...prev, ...active]));
+        setHasMore(page < res.last_page);
       })
       .catch((err) => {
         if (!cancelled)
-          setError(err instanceof Error ? err.message : "Gagal memuat produk");
+          setError(err instanceof Error ? err.message : "Failed to load products");
       });
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [page]);
+
+  useEffect(() => {
+    const el = sentinelRef.current;
+    if (!el || !hasMore || error) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          const next = pageRef.current + 1;
+          pageRef.current = next;
+          setPage(next);
+        }
+      },
+      { rootMargin: "400px" }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [hasMore, error]);
 
   const categories = useMemo(() => {
     const set = new Set<string>();
@@ -52,29 +82,37 @@ export default function Explore() {
     });
   }, [products, query, activeCategory]);
 
-  const toggleFavorite = (id: number) => {
-    setFavorites((prev) => {
-      const next = new Set(prev);
-      if (next.has(id)) {
-        next.delete(id);
-      } else {
-        next.add(id);
-      }
-      return next;
-    });
+  const toggleCart = async (id: number) => {
+    if (!user) {
+      push("Sign in to add items to your cart", "error");
+      navigate("/login");
+      return;
+    }
+    try {
+      await add(id);
+      push("Added to cart");
+    } catch (err) {
+      push(err instanceof Error ? err.message : "Failed to add to cart", "error");
+    }
   };
 
-  const toggleCart = (id: number) => {
-    setCart((prev) => {
-      const next = new Set(prev);
-      if (next.has(id)) {
-        next.delete(id);
-      } else {
-        next.add(id);
-      }
-      return next;
-    });
+  const changeQty = async (id: number, delta: number) => {
+    if (!user) {
+      push("Sign in to add items to your cart", "error");
+      navigate("/login");
+      return;
+    }
+    const item = items.find((it) => it.product_id === id);
+    if (!item) return;
+    try {
+      await setQty(item.id, item.qty + delta);
+    } catch (err) {
+      push(err instanceof Error ? err.message : "Failed to update quantity", "error");
+    }
   };
+
+  const qtyOf = (id: number) =>
+    items.find((it) => it.product_id === id)?.qty ?? 0;
 
   return (
     <div className="phone">
@@ -87,28 +125,34 @@ export default function Explore() {
       />
 
       <div className="section-label">
-        <h2>Pilihan segar</h2>
-        <span>{filtered.length} produk</span>
+        <h2>Fresh picks</h2>
+        <span>{filtered.length} products</span>
       </div>
 
       {error ? (
         <p className="text-sm text-[var(--coral)] px-5">{error}</p>
       ) : (
-        <div className="grid">
-          {filtered.map((product) => (
-            <ProductCard
-              key={product.id}
-              product={product}
-              isFav={favorites.has(product.id)}
-              onToggleFav={toggleFavorite}
-              isAdded={cart.has(product.id)}
-              onAdd={toggleCart}
-            />
-          ))}
-        </div>
+        <>
+          <div className="grid">
+            {filtered.map((product) => (
+              <ProductCard
+                key={product.id}
+                product={product}
+                qty={qtyOf(product.id)}
+                onAdd={toggleCart}
+                onChangeQty={changeQty}
+              />
+            ))}
+          </div>
+          {hasMore && (
+            <div ref={sentinelRef} className="py-4 text-center">
+              <span className="text-xs text-[var(--ink-soft)]">Loading more…</span>
+            </div>
+          )}
+        </>
       )}
 
-      <BottomNav active="explore" cartCount={cart.size} />
+      <BottomNav active="explore" cartCount={count} />
     </div>
   );
 }

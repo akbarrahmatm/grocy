@@ -14,7 +14,7 @@ class Integration extends Model
 
     public const SECRET_KEYS = [
         'midtrans' => ['server_key'],
-        'biteship' => ['api_key'],
+        'komship' => ['api_key'],
     ];
 
     protected $casts = [

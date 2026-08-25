@@ -16,6 +16,7 @@ class AddressStoreRequest extends FormRequest
             'city' => ['required', 'string', 'max:100'],
             'province' => ['required', 'string', 'max:100'],
             'postal_code' => ['required', 'string', 'max:10'],
+            'destination_id' => ['sometimes', 'nullable', 'integer', 'min:1'],
             'latitude' => ['sometimes', 'nullable', 'string', 'max:20'],
             'longitude' => ['sometimes', 'nullable', 'string', 'max:20'],
             'is_default' => ['sometimes', 'boolean'],

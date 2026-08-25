@@ -1,52 +1,59 @@
-import { CheckIcon, HeartIcon, PlusIcon } from "@/components/icons";
+import { PlusIcon } from "@/components/icons";
+import { resolveImageUrl } from "@/lib/utils";
 import type { Product } from "@/types";
 
 interface ProductCardProps {
   product: Product;
-  isFav: boolean;
-  onToggleFav: (id: number) => void;
-  isAdded: boolean;
+  qty: number;
   onAdd: (id: number) => void;
+  onChangeQty: (id: number, delta: number) => void;
 }
 
-const CATEGORY_EMOJI: Record<string, string> = {
-  Sayuran: "🥦",
-  "Buah-buahan": "🍓",
-  Daging: "🥩",
-  Pokok: "🫒",
-};
-
-const formatRp = (n: number) => `Rp ${n.toLocaleString("id-ID")}`;
-
-function categoryEmoji(category: string): string {
-  const key = Object.keys(CATEGORY_EMOJI).find(
-    (c) => category.toLowerCase().includes(c.toLowerCase()) || c.toLowerCase().includes(category.toLowerCase())
-  );
-  return key ? CATEGORY_EMOJI[key] : "🌿";
-}
+const formatRp = (n: number) => `Rp ${n.toLocaleString("en-US")}`;
 
 export default function ProductCard({
   product,
-  isFav,
-  onToggleFav,
-  isAdded,
+  qty,
   onAdd,
+  onChangeQty,
 }: ProductCardProps) {
   const category = product.category?.name ?? "Lainnya";
   const unit = product.uom?.name ?? product.uom?.code ?? "pcs";
+  const thumbnail = resolveImageUrl(product.thumbnail);
 
   return (
     <article className="card">
       <div className="card-media">
-        <div className="media-placeholder">{categoryEmoji(category)}</div>
-        <span className="fresh-dot">segar</span>
-        <button
-          className={`fav-btn ${isFav ? "active" : ""}`}
-          onClick={() => onToggleFav(product.id)}
-          aria-label={isFav ? "Hapus dari favorit" : "Tambah ke favorit"}
-        >
-          <HeartIcon filled={isFav} />
-        </button>
+        {thumbnail ? (
+          <img src={thumbnail} alt={product.name} loading="lazy" />
+        ) : (
+          <div className="media-placeholder">{category.charAt(0)}</div>
+        )}
+        {qty === 0 ? (
+          <button
+            className="add-btn"
+            onClick={() => onAdd(product.id)}
+            aria-label={`Add ${product.name} to cart`}
+          >
+            <PlusIcon />
+          </button>
+        ) : (
+          <div className="card-qty" aria-label={`${product.name} quantity`}>
+            <button
+              onClick={() => onChangeQty(product.id, -1)}
+              aria-label="Decrease quantity"
+            >
+              −
+            </button>
+            <span>{qty}</span>
+            <button
+              onClick={() => onChangeQty(product.id, 1)}
+              aria-label="Increase quantity"
+            >
+              +
+            </button>
+          </div>
+        )}
       </div>
 
       <div className="card-body">
@@ -54,15 +61,8 @@ export default function ProductCard({
         <h3 className="card-title">{product.name}</h3>
         <div className="card-footer">
           <p className="card-price">
-            {formatRp(Number(product.price))} <span>/{unit}</span>
+            {formatRp(Number(product.price))} <span>/ {unit}</span>
           </p>
-          <button
-            className={`add-btn ${isAdded ? "added" : ""}`}
-            onClick={() => onAdd(product.id)}
-            aria-label={`Tambah ${product.name} ke keranjang`}
-          >
-            {isAdded ? <CheckIcon /> : <PlusIcon />}
-          </button>
         </div>
       </div>
     </article>

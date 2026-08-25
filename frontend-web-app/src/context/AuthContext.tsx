@@ -16,6 +16,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   async function login(email: string, password: string) {
     const auth = await authApi.login(email, password);
+    if (auth.user.is_customer !== 1) {
+      throw new Error("Only customer accounts can sign in");
+    }
     saveSession(auth);
     setUser(auth.user);
   }

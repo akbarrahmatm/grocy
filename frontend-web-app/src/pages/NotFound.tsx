@@ -6,10 +6,9 @@ export default function NotFound() {
   return (
     <div className="phone phone-page">
       <div className="auth-card text-center">
-        <span className="text-3xl">🧭</span>
-        <h1 className="brand justify-center mt-3">Halaman tidak ditemukan</h1>
+        <h1 className="brand justify-center mt-3">Page not found</h1>
         <Link to="/" className="block mt-5">
-          <Button>Kembali ke Explore</Button>
+          <Button>Back to Explore</Button>
         </Link>
       </div>
     </div>

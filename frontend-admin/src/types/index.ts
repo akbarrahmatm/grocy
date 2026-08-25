@@ -65,6 +65,7 @@ export interface Product {
   slug: string;
   sku: string;
   description: string | null;
+  thumbnail: string | null;
   price: string;
   stock: number;
   is_active: boolean;

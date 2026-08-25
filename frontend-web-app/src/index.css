@@ -15,9 +15,9 @@
   --line: #ECE5F5;
   --shadow: 0 12px 28px -14px rgba(43, 33, 64, 0.28);
 
-  --font-display: "Fraunces", "Iowan Old Style", serif;
+  --font-display: "Plus Jakarta Sans", -apple-system, sans-serif;
   --font-body: "Plus Jakarta Sans", -apple-system, sans-serif;
-  --font-mono: "IBM Plex Mono", monospace;
+  --font-mono: "Plus Jakarta Sans", -apple-system, sans-serif;
 
   color-scheme: light;
 }
