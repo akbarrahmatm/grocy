@@ -1,5 +1,5 @@
 interface FieldProps {
-  icon: React.ComponentType<{ size?: number; className?: string }>;
+  icon?: React.ComponentType<{ size?: number; className?: string }>;
   label: string;
   type?: string;
   value: string;
@@ -29,17 +29,19 @@ export default function Field({
         </label>
       )}
       <div className="relative">
-        <Icon
-          size={16}
-          className="absolute left-3 top-1/2 -translate-y-1/2 [color:var(--ad-muted)]"
-        />
+        {Icon && (
+          <Icon
+            size={16}
+            className="absolute left-3 top-1/2 -translate-y-1/2 [color:var(--ad-muted)]"
+          />
+        )}
         <input
           type={type}
           value={value}
           onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
           autoComplete={autoComplete}
-          className="w-full pl-9 pr-9 py-2.5 rounded-md border text-sm outline-none"
+          className={`w-full ${Icon ? "pl-9" : "pl-3"} pr-9 py-2.5 rounded-md border text-sm outline-none`}
           style={{
             background: "var(--ad-bg)",
             borderColor: "var(--ad-border)",

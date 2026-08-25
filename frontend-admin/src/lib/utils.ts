@@ -2,6 +2,22 @@ export function cn(...classes: (string | false | null | undefined)[]) {
   return classes.filter(Boolean).join(" ");
 }
 
+export function formatDate(iso: string | null): string {
+  if (!iso) return "—";
+  return new Date(iso).toLocaleDateString("en-US", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+  });
+}
+
+export function formatCurrency(amount: string | number): string {
+  return Number(amount).toLocaleString("en-US", {
+    style: "currency",
+    currency: "IDR",
+  });
+}
+
 export function initialsOf(name: string): string {
   return name
     .split(" ")
