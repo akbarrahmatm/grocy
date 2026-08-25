@@ -4,7 +4,7 @@ Grocery e-commerce platform. Monorepo (like) with three apps:
 
 | App                | Stack                                      | Description            |
 | ------------------ | ------------------------------------------ | ---------------------- |
-| `backend`          | Laravel 13, PHP 8.3, Sanctum, SQLite       | REST API + admin logic |
+| `backend`          | Laravel 13, PHP 8.3, Sanctum, MySQL        | REST API + admin logic |
 | `frontend-admin`   | React 19, TypeScript, Vite, Tailwind CSS 4 | Admin panel            |
 | `frontend-web-app` | React 19, TypeScript, Vite, Tailwind CSS 4 | Customer web app       |
 
