@@ -98,6 +98,13 @@ export interface StockMovement {
   updated_at: string | null;
 }
 
+export interface Integration {
+  provider: string;
+  is_active: boolean;
+  environment: "sandbox" | "production";
+  config: Record<string, string>;
+}
+
 export interface Toast {
   id: number;
   text: string;

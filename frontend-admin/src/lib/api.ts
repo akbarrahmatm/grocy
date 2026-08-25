@@ -2,6 +2,7 @@ import type {
   AuthResponse,
   AuthUser,
   Category,
+  Integration,
   Paginated,
   Product,
   StockAdjustment,
@@ -191,5 +192,28 @@ export const stockMovementApi = {
   list: (opts: { search?: string; page?: number } = {}) =>
     request<Paginated<StockMovement>>(
       `/inventory/stock-movement?${queryString(opts)}`
+    ),
+};
+
+export interface GatewayPayload {
+  environment?: string;
+  is_active?: boolean;
+  config: Record<string, string>;
+}
+
+export const settingsApi = {
+  gateways: () => request<Integration[]>("/settings/gateways"),
+  update: (provider: string, payload: GatewayPayload) =>
+    request<Integration>(`/settings/gateways/${provider}`, {
+      method: "PUT",
+      body: JSON.stringify(payload),
+    }),
+  test: (provider: string, payload: GatewayPayload) =>
+    request<{ ok: boolean; message: string }>(
+      `/settings/gateways/${provider}/test`,
+      {
+        method: "POST",
+        body: JSON.stringify(payload),
+      }
     ),
 };

@@ -11,6 +11,8 @@ const Uoms = lazy(() => import("@/pages/Uoms"));
 const Stock = lazy(() => import("@/pages/Inventory/Stock"));
 const StockAdjustment = lazy(() => import("@/pages/Inventory/StockAdjustment"));
 const StockMovement = lazy(() => import("@/pages/Inventory/StockMovement"));
+const PaymentGateway = lazy(() => import("@/pages/Settings/PaymentGateway"));
+const Shipment = lazy(() => import("@/pages/Settings/Shipment"));
 const Login = lazy(() => import("@/pages/Login"));
 const NotFound = lazy(() => import("@/pages/NotFound"));
 
@@ -154,6 +156,22 @@ function App() {
             element={
               <RequireAuth>
                 <StockMovement />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/settings/payment-gateway"
+            element={
+              <RequireAuth>
+                <PaymentGateway />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/settings/shipment"
+            element={
+              <RequireAuth>
+                <Shipment />
               </RequireAuth>
             }
           />
