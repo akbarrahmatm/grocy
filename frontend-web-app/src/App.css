@@ -432,6 +432,33 @@
   transform: scale(1.08);
 }
 
+.card-qty button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.card-qty button:disabled:hover {
+  background: var(--lavender);
+  color: var(--ink);
+}
+
+.out-of-stock {
+  position: absolute;
+  top: 9px;
+  right: 9px;
+  z-index: 2;
+  background: rgba(255, 255, 255, 0.94);
+  color: var(--coral);
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 6px 10px;
+  border-radius: 999px;
+  box-shadow: var(--shadow);
+}
+
 .card-qty span {
   font-weight: 700;
   font-size: 0.82rem;

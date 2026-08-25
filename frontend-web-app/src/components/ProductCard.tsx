@@ -20,6 +20,8 @@ export default function ProductCard({
   const category = product.category?.name ?? "Lainnya";
   const unit = product.uom?.name ?? product.uom?.code ?? "pcs";
   const thumbnail = resolveImageUrl(product.thumbnail);
+  const outOfStock = product.stock <= 0;
+  const maxedOut = !outOfStock && qty >= product.stock;
 
   return (
     <article className="card">
@@ -29,7 +31,9 @@ export default function ProductCard({
         ) : (
           <div className="media-placeholder">{category.charAt(0)}</div>
         )}
-        {qty === 0 ? (
+        {outOfStock ? (
+          <span className="out-of-stock">Out of stock</span>
+        ) : qty === 0 ? (
           <button
             className="add-btn"
             onClick={() => onAdd(product.id)}
@@ -48,7 +52,8 @@ export default function ProductCard({
             <span>{qty}</span>
             <button
               onClick={() => onChangeQty(product.id, 1)}
-              aria-label="Increase quantity"
+              disabled={maxedOut}
+              aria-label={maxedOut ? "Maximum stock reached" : "Increase quantity"}
             >
               +
             </button>

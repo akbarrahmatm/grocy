@@ -88,6 +88,15 @@ export default function Explore() {
       navigate("/login");
       return;
     }
+    const product = products.find((p) => p.id === id);
+    if (!product || product.stock <= 0) {
+      push("Product is out of stock", "error");
+      return;
+    }
+    if (qtyOf(id) >= product.stock) {
+      push(`Only ${product.stock} in stock`, "error");
+      return;
+    }
     try {
       await add(id);
       push("Added to cart");
@@ -104,6 +113,11 @@ export default function Explore() {
     }
     const item = items.find((it) => it.product_id === id);
     if (!item) return;
+    const product = products.find((p) => p.id === id);
+    if (delta > 0 && product && item.qty >= product.stock) {
+      push(`Only ${product.stock} in stock`, "error");
+      return;
+    }
     try {
       await setQty(item.id, item.qty + delta);
     } catch (err) {

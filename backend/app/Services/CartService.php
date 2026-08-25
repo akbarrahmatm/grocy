@@ -5,9 +5,10 @@ namespace App\Services;
 use App\Models\CartItem;
 use App\Models\Product;
 use App\Models\User;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class CartService
 {
@@ -25,14 +26,20 @@ class CartService
     public function add(User $user, int $productId, int $qty): CartItem
     {
         return DB::transaction(function () use ($user, $productId, $qty) {
-            Product::query()->lockForUpdate()->findOrFail($productId);
+            $product = Product::query()->lockForUpdate()->findOrFail($productId);
 
-            $item = CartItem::where('user_id', $user->id)
+            $inCart = (int) CartItem::where('user_id', $user->id)
                 ->where('product_id', $productId)
                 ->lockForUpdate()
-                ->first();
+                ->value('qty');
 
-            if ($item) {
+            if ($product->stock < $inCart + $qty) {
+                throw new HttpException(422, "Only {$product->stock} in stock for {$product->name}.");
+            }
+
+            if ($item = CartItem::where('user_id', $user->id)
+                ->where('product_id', $productId)
+                ->first()) {
                 $item->increment('qty', $qty);
             } else {
                 $item = CartItem::create([
@@ -51,13 +58,26 @@ class CartService
 
     public function update(User $user, int $id, int $qty): CartItem
     {
-        $item = $this->findOrFail($user, $id);
-        $item->update(['qty' => $qty]);
+        return DB::transaction(function () use ($user, $id, $qty) {
+            $item = CartItem::where('user_id', $user->id)->lockForUpdate()->find($id);
 
-        return $item->load([
-            'product:id,name,sku,price,stock,uom_id,thumbnail',
-            'product.uom:id,name,code',
-        ]);
+            if (! $item) {
+                throw new ModelNotFoundException('Cart item not found.');
+            }
+
+            $product = Product::query()->lockForUpdate()->findOrFail($item->product_id);
+
+            if ($product->stock < $qty) {
+                throw new HttpException(422, "Only {$product->stock} in stock for {$product->name}.");
+            }
+
+            $item->update(['qty' => $qty]);
+
+            return $item->load([
+                'product:id,name,sku,price,stock,uom_id,thumbnail',
+                'product.uom:id,name,code',
+            ]);
+        });
     }
 
     public function remove(User $user, int $id): void

@@ -20,6 +20,10 @@ export default function Cart() {
   }
 
   async function changeQty(item: CartItem, delta: number) {
+    if (delta > 0 && item.product && item.qty >= item.product.stock) {
+      push(`Only ${item.product.stock} in stock`, "error");
+      return;
+    }
     setBusyId(item.id);
     try {
       await setQty(item.id, item.qty + delta);

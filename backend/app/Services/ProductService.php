@@ -16,6 +16,7 @@ class ProductService
             ->with(['category:id,name', 'uom:id,name,code'])
             ->when($search, fn ($q) => $q->where('name', 'like', "%{$search}%")
                 ->orWhere('sku', 'like', "%{$search}%"))
+            ->orderByRaw('stock <= 0')
             ->orderByDesc('created_at')
             ->paginate(15);
     }
