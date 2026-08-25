@@ -5,14 +5,12 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UomController;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware('auth:sanctum')->group(function () {
-    Route::get('category', [CategoryController::class, 'index']);
-    Route::get('category/{category}', [CategoryController::class, 'show']);
-    Route::get('uom', [UomController::class, 'index']);
-    Route::get('uom/{uom}', [UomController::class, 'show']);
-    Route::get('product', [ProductController::class, 'index']);
-    Route::get('product/{product}', [ProductController::class, 'show']);
-});
+Route::get('category', [CategoryController::class, 'index']);
+Route::get('category/{category}', [CategoryController::class, 'show']);
+Route::get('uom', [UomController::class, 'index']);
+Route::get('uom/{uom}', [UomController::class, 'show']);
+Route::get('product', [ProductController::class, 'index']);
+Route::get('product/{product}', [ProductController::class, 'show']);
 
 Route::middleware(['auth:sanctum', 'admin'])->group(function () {
     Route::post('category', [CategoryController::class, 'store']);
