@@ -1,0 +1,58 @@
+[
+    {
+        "id": 1,
+        "name": "Sayuran",
+        "slug": "sayuran",
+        "description": "Berbagai jenis sayuran segar dan daun-daunan.",
+        "is_active": true
+    },
+    {
+        "id": 2,
+        "name": "Buah-buahan",
+        "slug": "buah-buahan",
+        "description": "Buah-buahan segar lokal dan impor.",
+        "is_active": true
+    },
+    {
+        "id": 3,
+        "name": "Daging & Unggas",
+        "slug": "daging-unggas",
+        "description": "Daging sapi, ayam, bebek, dan olahan segar.",
+        "is_active": true
+    },
+    {
+        "id": 4,
+        "name": "Ikan & Seafood",
+        "slug": "ikan-seafood",
+        "description": "Ikan laut, ikan air tawar, udang, dan makanan laut.",
+        "is_active": true
+    },
+    {
+        "id": 5,
+        "name": "Bumbu & Rempah",
+        "slug": "bumbu-rempah",
+        "description": "Bumbu dapur segar dan rempah-rempah pilihan.",
+        "is_active": true
+    },
+    {
+        "id": 6,
+        "name": "Beras & Biji-bijian",
+        "slug": "beras-biji-bijian",
+        "description": "Beras, kacang-kacangan, dan biji-bijian olahan.",
+        "is_active": true
+    },
+    {
+        "id": 7,
+        "name": "Susu & Olahan",
+        "slug": "susu-olahan",
+        "description": "Susu segar, keju, mentega, dan telur.",
+        "is_active": true
+    },
+    {
+        "id": 8,
+        "name": "Minyak & Bahan Pokok",
+        "slug": "minyak-bahan-pokok",
+        "description": "Minyak goreng, gula, garam, dan tepung.",
+        "is_active": true
+    }
+]

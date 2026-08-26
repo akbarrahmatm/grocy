@@ -26,6 +26,7 @@ export default function Explore() {
   const [activeCategory, setActiveCategory] = useState(ALL);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(false);
+  const [total, setTotal] = useState(0);
   const debouncedQuery = useDebouncedValue(query, 300);
 
   const sentinelRef = useRef<HTMLDivElement | null>(null);
@@ -45,6 +46,7 @@ export default function Explore() {
         const active = res.data.filter((p) => p.is_active);
         setProducts((prev) => (page === 1 ? active : [...prev, ...active]));
         setHasMore(page < res.last_page);
+        setTotal(res.total);
       })
       .catch((err) => {
         if (!cancelled)
@@ -152,7 +154,9 @@ export default function Explore() {
 
       <div className="section-label">
         <h2>Fresh picks</h2>
-        <span>{filtered.length} products</span>
+        <span>
+          {(activeCategory === ALL ? total : filtered.length)} products
+        </span>
       </div>
 
       {error ? (

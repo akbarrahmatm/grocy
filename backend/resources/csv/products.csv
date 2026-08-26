@@ -1,0 +1,115 @@
+category_id,uom_id,name,slug,description,thumbnail,price,is_active
+1,1,"Bayam Hijau",bayam-hijau,"Bayam hijau segar per ikat.",bayam-hijau.jpg,3000,1
+1,1,Kangkung,kangkung,"Kangkung darat segar.",kangkung.jpg,3000,1
+1,2,Wortel,wortel,"Wortel lokal manis segar.",wortel.jpg,12000,1
+1,2,Kentang,kentang,"Kentang dieng ukuran sedang.",kentang.jpg,18000,1
+1,2,"Kubis / Kol",kubis-kol,"Kubis putih segar.",kubis.jpg,10000,1
+1,2,Brokoli,brokoli,"Brokoli hijau segar.",brokoli.jpg,25000,1
+1,2,"Kembang Kol",kembang-kol,"Kembang kol putih padat.",kembang-kol.jpg,22000,1
+1,2,"Tomat Merah",tomat-merah,"Tomat buah segar manis.",tomat.jpg,14000,1
+1,2,Mentimun,mentimun,"Timun lokal renyah.",mentimun.jpg,8000,1
+1,2,"Terong Ungu",terong-ungu,"Terong ungu segar.",terong-ungu.jpg,10000,1
+1,1,"Sawi Hijau / Caisim",sawi-hijau,"Sawi hijau untuk mie/bakso.",sawi-hijau.jpg,4000,1
+1,1,"Sawi Putih",sawi-putih,"Sawi putih segar.",sawi-putih.jpg,11000,1
+1,1,"Daun Bawang",daun-bawang,"Daun bawang segar per ikat.",daun-bawang.jpg,5000,1
+1,1,Seledri,seledri,"Seledri harum segar.",seledri.jpg,5000,1
+1,2,Buncis,buncis,"Buncis muda manis.",buncis.jpg,14000,1
+1,2,"Kacang Panjang",kacang-panjang,"Kacang panjang segar per ikat.",kacang-panjang.jpg,6000,1
+1,2,"Labu Siam",labu-siam,"Labu siam manis.",labu-siam.jpg,7000,1
+1,2,Pare,pare,"Pare hijau segar.",pare.jpg,9000,1
+1,3,"Jamur Tiram",jamur-tiram,"Jamur tiram putih per pack.",jamur-tiram.jpg,8000,1
+1,3,"Jamur Enoki",jamur-enoki,"Jamur enoki impor per pack.",jamur-enoki.jpg,7000,1
+1,3,"Tauge / Kecambah",tauge,"Tauge kedelai/kacang hijau segar.",tauge.jpg,4000,1
+1,2,"Paprika Merah",paprika-merah,"Paprika merah segar.",paprika-merah.jpg,45000,1
+1,2,"Paprika Hijau",paprika-hijau,"Paprika hijau segar.",paprika-hijau.jpg,38000,1
+1,2,Zucchini,zucchini,"Zucchini hijau segar.",zucchini.jpg,28000,1
+1,1,"Selada Keriting",selada-keriting,"Selada hijau untuk salad.",selada.jpg,15000,1
+2,2,"Pisang Cavendish",pisang-cavendish,"Pisang manis kaya kalium.",pisang-cavendish.jpg,22000,1
+2,2,"Apel Fuji",apel-fuji,"Apel fuji mani manis dan renyah.",apel-fuji.jpg,35000,1
+2,2,"Jeruk Siam",jeruk-siam,"Jeruk siam manis berkulit tipis.",jeruk-siam.jpg,20000,1
+2,2,"Mangga Harum Manis",mangga-harum-manis,"Mangga matang pohon manis.",mangga.jpg,28000,1
+2,2,"Alpukat Mentega",alpukat-mentega,"Alpukat berdaging tebal.",alpukat.jpg,32000,1
+2,2,"Semangka Merah Tanpa Biji",semangka-merah,"Semangka segar dan manis.",semangka.jpg,10000,1
+2,2,"Melon Hijau",melon-hijau,"Melon manis berdaging hijau.",melon.jpg,15000,1
+2,2,"Nanas Honi",nanas-honi,"Nanas manis tidak gatal di lidah.",nanas.jpg,18000,1
+2,2,"Anggur Red Globe",anggur-red-globe,"Anggur merah manis manis.",anggur.jpg,60000,1
+2,3,Stroberi,stroberi,"Stroberi manis asam per pack.",stroberi.jpg,20000,1
+2,2,"Buah Naga Merah",buah-naga-merah,"Buah naga manis segar.",buah-naga.jpg,22000,1
+2,2,"Pepaya Calina (California)",pepaya-california,"Pepaya manis manis.",pepaya.jpg,9000,1
+2,2,"Pear Century",pear-century,"Pir renyah banyak air.",pear.jpg,26000,1
+2,2,"Salak Pondoh",salak-pondoh,"Salak manis dan renyah.",salak.jpg,14000,1
+2,2,"Lemon Impor",lemon-impor,"Lemon kuning segar.",lemon.jpg,40000,1
+3,2,"Daging Sapi Render/Paha",daging-sapi-paha,"Daging sapi segar cocok untuk rendang.",daging-sapi.jpg,135000,1
+3,2,"Daging Sapi Giling",daging-sapi-giling,"Daging sapi cincang halus.",daging-giling.jpg,14000,1
+3,2,"Iga Sapi",iga-sapi,"Iga sapi potong untuk sup.",iga-sapi.jpg,110000,1
+3,2,"Dada Ayam Fillet",dada-ayam-fillet,"Dada ayam tanpa tulang dan kulit.",dada-ayam.jpg,55000,1
+3,2,"Paha Ayam",paha-ayam,"Paha ayam utuh segar.",paha-ayam.jpg,45000,1
+3,2,"Ayam Utuh Broiler",ayam-utuh-broiler,"Ayam potong bersih ukuran 1kg.",ayam-utuh.jpg,38000,1
+3,2,"Ayam Kampung Utuh",ayam-kampung-utuh,"Ayam kampung asli segar.",ayam-kampung.jpg,75000,1
+3,2,"Sayap Ayam",sayap-ayam,"Sayap ayam segar.",sayap-ayam.jpg,40000,1
+3,2,"Daging Kambing Potong",daging-kambing-potong,"Daging kambing segar untuk gulai/sate.",daging-kambing.jpg,150000,1
+3,2,"Daging Bebek Utuh",daging-bebek-utuh,"Bebek karkas bersihan.",bebek-utuh.jpg,65000,1
+3,2,"Hati Ayam",hati-ayam,"Hati dan ampela ayam segar.",hati-ayam.jpg,25000,1
+3,2,"Daging Sapi Slice (Shortplate)",daging-sapi-slice,"Daging sapi iris tipis untuk shabu/grill.",beef-slice.jpg,65000,1
+4,2,"Ikan Gurame Segar",ikan-gurame-segar,"Ikan gurame hidup/segar.",gurame.jpg,55000,1
+4,2,"Ikan Nila Merah",ikan-nila-merah,"Ikan nila segar bersihan.",nila.jpg,38000,1
+4,2,"Ikan Lele Segar",ikan-lele-segar,"Ikan lele segar bersihan.",lele.jpg,28000,1
+4,2,"Ikan Tongkol Segar",ikan-tongkol-segar,"Ikan tongkol potong/utuh.",tongkol.jpg,35000,1
+4,2,"Ikan Kembung",ikan-kembung,"Ikan kembung Banjar segar.",kembung.jpg,42000,1
+4,2,"Ikan Bandeng",ikan-bandeng,"Ikan bandeng segar.",bandeng.jpg,36000,1
+4,2,"Udang Vaname Segar",udang-vaname-segar,"Udang ukuran sedang segar.",udang-vaname.jpg,85000,1
+4,2,"Cumi-cumi Segar",cumi-cumi-segar,"Cumi sero segar manis.",cumi.jpg,90000,1
+4,2,"Kerang Dara",kerang-dara,"Kerang dara segar mentah.",kerang-dara.jpg,25000,1
+4,2,"Fillet Ikan Salmon",fillet-ikan-salmon,"Salmon Norwegia segar tanpa duri.",salmon.jpg,280000,1
+4,2,"Fillet Ikan Dori / Patin",fillet-ikan-dori,"Fillet dori beku tanpa tulang.",dori.jpg,40000,1
+4,2,"Kepiting Bakau Segar",kepiting-bakau-segar,"Kepiting hidup bertelur/jantan.",kepiting.jpg,120000,1
+4,2,"Ikan Kakap Merah",ikan-kakap-merah,"Ikan kakap laut segar.",kakap-merah.jpg,75000,1
+5,2,"Bawang Merah Lokal",bawang-merah-lokal,"Bawang merah Brebes wangi.",bawang-merah.jpg,35000,1
+5,2,"Bawang Putih Kating",bawang-putih-kating,"Bawang putih kating kualitas super.",bawang-putih.jpg,40000,1
+5,2,"Bawang Bombay",bawang-bombay,"Bawang bombay kuning manis.",bawang-bombay.jpg,25000,1
+5,2,"Cabai Merah Keriting",cabai-merah-keriting,"Cabai merah pedas segar.",cabai-merah.jpg,45000,1
+5,2,"Cabai Rawit Merah",cabai-rawit-merah,"Cabai rawit setan super pedas.",cabai-rawit.jpg,60000,1
+5,2,"Cabai Hijau Besar",cabai-hijau-besar,"Cabai hijau untuk masakan/sambal hijau.",cabai-hijau.jpg,30000,1
+5,2,"Jahe Gajah",jahe-gajah,"Jahe segar penghangat tubuh.",jahe.jpg,24000,1
+5,2,"Kunyit Segar",kunyit-segar,"Kunyit tua pewarna dan bumbu alami.",kunyit.jpg,15000,1
+5,2,"Lengkuas / Laos",lengkuas,"Lengkuas muda harum.",lengkuas.jpg,16000,1
+5,2,Kencur,kencur,"Kencur wangi untuk bumbu seblak/urap.",kencur.jpg,28000,1
+5,1,"Serai / Sereh",serai,"Serai dapur per ikat.",serai.jpg,3000,1
+5,3,"Daun Jeruk Purut",daun-jeruk-purut,"Daun jeruk wangi per pack.",daun-jeruk.jpg,4000,1
+5,3,"Daun Salam",daun-salam,"Daun salam segar per pack.",daun-salam.jpg,3000,1
+5,3,"Ketumbar Bubuk",ketumbar-bubuk,"Ketumbar murni kemasan.",ketumbar.jpg,5000,1
+5,3,"Merica / Lada Putih Bubuk",merica-bubuk,"Lada murni asli pedas.",merica.jpg,7000,1
+6,2,"Beras Setra Ramos 5kg",beras-setra-ramos-5kg,"Beras putih pulen kualitas medium super.",beras-ramos.jpg,72000,1
+6,2,"Beras Merah Organik 1kg",beras-merah-organik-1kg,"Beras merah kaya serat untuk diet.",beras-merah.jpg,25000,1
+6,2,"Beras Pandan Wangi 5kg",beras-pandan-wangi-5kg,"Beras alami beraroma pandan.",beras-pandan.jpg,88000,1
+6,2,"Kacang Tanah Kupas",kacang-tanah-kupas,"Kacang tanah bersih siap olah.",kacang-tanah.jpg,32000,1
+6,2,"Kacang Hijau",kacang-hijau,"Kacang hijau pilihan untuk bubur.",kacang-hijau.jpg,26000,1
+6,2,"Kacang Merah Kering",kacang-merah-kering,"Kacang merah untuk sup/rendang.",kacang-merah.jpg,30000,1
+6,2,"Kacang Kedelai Lokal",kacang-kedelai-lokal,"Biji kedelai untuk susu/tempe.",kedelai.jpg,16000,1
+6,2,"Jagung Manis Pipil",jagung-manis-pipil,"Jagung pipil manis segar.",jagung-pipil.jpg,18000,1
+6,3,"Beras Ketan Putih",beras-ketan-putih,"Beras ketan mutu terbaik.",ketan-putih.jpg,18000,1
+6,3,"Beras Shirataki 250gr",beras-shirataki,"Beras rendah kalori dan karbohidrat.",shirataki.jpg,45000,1
+7,2,"Telur Ayam Negeri 1kg",telur-ayam-negeri-1kg,"Telur ayam segar isi 16-17 butir.",telur-ayam.jpg,28000,1
+7,3,"Telur Ayam Kampung (Isi 10)",telur-ayam-kampung,"Telur ayam kampung asli kaya nutrisi.",telur-kampung.jpg,25000,1
+7,3,"Telur Puyuh (Isi 30)",telur-puyuh,"Telur puyuh mentah segar.",telur-puyuh.jpg,15000,1
+7,4,"Susu UHT Full Cream 1L",susu-uht-full-cream-1l,"Susu cair UHT rasa original.",susu-uht.jpg,19000,1
+7,4,"Susu Evaporasi 380g",susu-evaporasi,"Susu evaporasi masakan & minuman.",susu-evaporasi.jpg,16000,1
+7,3,"Keju Cheddar Block 160g",keju-cheddar-block,"Keju olahan siap parut.",keju-cheddar.jpg,22000,1
+7,3,"Keju Mozzarella 200g",keju-mozzarella,"Keju leleh berkualiatas.",mozzarella.jpg,38000,1
+7,3,"Mentega Unsalted / Unsalted Butter 200g",unsalted-butter,"Mentega tawar untuk olahan kue/baking.",butter.jpg,45000,1
+7,3,"Yogurt Plain 500ml",yogurt-plain-500ml,"Yogurt tawar kaya probiotik.",yogurt.jpg,30000,1
+8,4,"Minyak Goreng Sawit 2L",minyak-goreng-sawit-2l,"Minyak goreng kelapa sawit ganda penyaringan.",minyak-goreng.jpg,34000,1
+8,4,"Minyak Zaitun (Extra Virgin Olive Oil) 500ml",extra-virgin-olive-oil,"Minyak zaitun murni untuk salad/dressing.",evoo.jpg,95000,1
+8,4,"Minyak Wijen 110ml",minyak-wijen-110ml,"Minyak wijen murni aroma harum.",minyak-wijen.jpg,28000,1
+8,2,"Gula Pasir Putih 1kg",gula-pasir-putih-1kg,"Gula tebu murni manis alami.",gula-pasir.jpg,17500,1
+8,2,"Gula Jawa / Gula Merah 500g",gula-jawa-500g,"Gula palma cetak asli.",gula-jawa.jpg,12000,1
+8,3,"Garam Dapur Beryodium 500g",garam-dapur-500g,"Garam halus beryodium tinggi.",garam.jpg,4000,1
+8,2,"Tepung Terigu Protein Sedang 1kg",tepung-terigu-sedang-1kg,"Tepung serbaguna untuk gorengan & kue.",terigu.jpg,13000,1
+8,2,"Tepung Tapioka / Sagu 500g",tepung-tapioka-500g,"Tepung pati singkong kenyal.",tapioka.jpg,8000,1
+8,2,"Tepung Maizena 200g",tepung-maizena-200g,"Tepung pati jagung pengental kuah.",maizena.jpg,6000,1
+8,2,"Tepung Beras 500g",tepung-beras-500g,"Tepung beras putih halus.",tepung-beras.jpg,9000,1
+8,4,"Kecap Manis 520ml",kecap-manis-520ml,"Kecap manis kedelai hitam pilihan.",kecap-manis.jpg,24000,1
+8,4,"Saus Tiram 270ml",saus-tiram-270ml,"Saus tiram gurih untuk tumisan.",saus-tiram.jpg,18000,1
+8,4,"Saus Sambal Botol 335ml",saus-sambal-335ml,"Saus cabai pedas gurih.",saus-sambal.jpg,15000,1
+8,4,"Santan Kelapa Cair 200ml",santan-kelapa-cair-200ml,"Santan kelapa siap pakai.",santan.jpg,4000,1
+8,3,"Margarin Multiguna 200g",margarin-multiguna-200g,"Margarin untuk memasak dan roti.",margarin.jpg,8500,1

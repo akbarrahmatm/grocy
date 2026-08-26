@@ -1,0 +1,1149 @@
+[
+    {
+        "category_id": 1,
+        "uom_id": 1,
+        "name": "Bayam Hijau",
+        "slug": "bayam-hijau",
+        "description": "Bayam hijau segar per ikat.",
+        "thumbnail": "bayam-hijau.jpg",
+        "price": 3000,
+        "is_active": true
+    },
+    {
+        "category_id": 1,
+        "uom_id": 1,
+        "name": "Kangkung",
+        "slug": "kangkung",
+        "description": "Kangkung darat segar.",
+        "thumbnail": "kangkung.jpg",
+        "price": 3000,
+        "is_active": true
+    },
+    {
+        "category_id": 1,
+        "uom_id": 2,
+        "name": "Wortel",
+        "slug": "wortel",
+        "description": "Wortel lokal manis segar.",
+        "thumbnail": "wortel.jpg",
+        "price": 12000,
+        "is_active": true
+    },
+    {
+        "category_id": 1,
+        "uom_id": 2,
+        "name": "Kentang",
+        "slug": "kentang",
+        "description": "Kentang dieng ukuran sedang.",
+        "thumbnail": "kentang.jpg",
+        "price": 18000,
+        "is_active": true
+    },
+    {
+        "category_id": 1,
+        "uom_id": 2,
+        "name": "Kubis / Kol",
+        "slug": "kubis-kol",
+        "description": "Kubis putih segar.",
+        "thumbnail": "kubis.jpg",
+        "price": 10000,
+        "is_active": true
+    },
+    {
+        "category_id": 1,
+        "uom_id": 2,
+        "name": "Brokoli",
+        "slug": "brokoli",
+        "description": "Brokoli hijau segar.",
+        "thumbnail": "brokoli.jpg",
+        "price": 25000,
+        "is_active": true
+    },
+    {
+        "category_id": 1,
+        "uom_id": 2,
+        "name": "Kembang Kol",
+        "slug": "kembang-kol",
+        "description": "Kembang kol putih padat.",
+        "thumbnail": "kembang-kol.jpg",
+        "price": 22000,
+        "is_active": true
+    },
+    {
+        "category_id": 1,
+        "uom_id": 2,
+        "name": "Tomat Merah",
+        "slug": "tomat-merah",
+        "description": "Tomat buah segar manis.",
+        "thumbnail": "tomat.jpg",
+        "price": 14000,
+        "is_active": true
+    },
+    {
+        "category_id": 1,
+        "uom_id": 2,
+        "name": "Mentimun",
+        "slug": "mentimun",
+        "description": "Timun lokal renyah.",
+        "thumbnail": "mentimun.jpg",
+        "price": 8000,
+        "is_active": true
+    },
+    {
+        "category_id": 1,
+        "uom_id": 2,
+        "name": "Terong Ungu",
+        "slug": "terong-ungu",
+        "description": "Terong ungu segar.",
+        "thumbnail": "terong-ungu.jpg",
+        "price": 10000,
+        "is_active": true
+    },
+    {
+        "category_id": 1,
+        "uom_id": 1,
+        "name": "Sawi Hijau / Caisim",
+        "slug": "sawi-hijau",
+        "description": "Sawi hijau untuk mie/bakso.",
+        "thumbnail": "sawi-hijau.jpg",
+        "price": 4000,
+        "is_active": true
+    },
+    {
+        "category_id": 1,
+        "uom_id": 1,
+        "name": "Sawi Putih",
+        "slug": "sawi-putih",
+        "description": "Sawi putih segar.",
+        "thumbnail": "sawi-putih.jpg",
+        "price": 11000,
+        "is_active": true
+    },
+    {
+        "category_id": 1,
+        "uom_id": 1,
+        "name": "Daun Bawang",
+        "slug": "daun-bawang",
+        "description": "Daun bawang segar per ikat.",
+        "thumbnail": "daun-bawang.jpg",
+        "price": 5000,
+        "is_active": true
+    },
+    {
+        "category_id": 1,
+        "uom_id": 1,
+        "name": "Seledri",
+        "slug": "seledri",
+        "description": "Seledri harum segar.",
+        "thumbnail": "seledri.jpg",
+        "price": 5000,
+        "is_active": true
+    },
+    {
+        "category_id": 1,
+        "uom_id": 2,
+        "name": "Buncis",
+        "slug": "buncis",
+        "description": "Buncis muda manis.",
+        "thumbnail": "buncis.jpg",
+        "price": 14000,
+        "is_active": true
+    },
+    {
+        "category_id": 1,
+        "uom_id": 2,
+        "name": "Kacang Panjang",
+        "slug": "kacang-panjang",
+        "description": "Kacang panjang segar per ikat.",
+        "thumbnail": "kacang-panjang.jpg",
+        "price": 6000,
+        "is_active": true
+    },
+    {
+        "category_id": 1,
+        "uom_id": 2,
+        "name": "Labu Siam",
+        "slug": "labu-siam",
+        "description": "Labu siam manis.",
+        "thumbnail": "labu-siam.jpg",
+        "price": 7000,
+        "is_active": true
+    },
+    {
+        "category_id": 1,
+        "uom_id": 2,
+        "name": "Pare",
+        "slug": "pare",
+        "description": "Pare hijau segar.",
+        "thumbnail": "pare.jpg",
+        "price": 9000,
+        "is_active": true
+    },
+    {
+        "category_id": 1,
+        "uom_id": 3,
+        "name": "Jamur Tiram",
+        "slug": "jamur-tiram",
+        "description": "Jamur tiram putih per pack.",
+        "thumbnail": "jamur-tiram.jpg",
+        "price": 8000,
+        "is_active": true
+    },
+    {
+        "category_id": 1,
+        "uom_id": 3,
+        "name": "Jamur Enoki",
+        "slug": "jamur-enoki",
+        "description": "Jamur enoki impor per pack.",
+        "thumbnail": "jamur-enoki.jpg",
+        "price": 7000,
+        "is_active": true
+    },
+    {
+        "category_id": 1,
+        "uom_id": 3,
+        "name": "Tauge / Kecambah",
+        "slug": "tauge",
+        "description": "Tauge kedelai/kacang hijau segar.",
+        "thumbnail": "tauge.jpg",
+        "price": 4000,
+        "is_active": true
+    },
+    {
+        "category_id": 1,
+        "uom_id": 2,
+        "name": "Paprika Merah",
+        "slug": "paprika-merah",
+        "description": "Paprika merah segar.",
+        "thumbnail": "paprika-merah.jpg",
+        "price": 45000,
+        "is_active": true
+    },
+    {
+        "category_id": 1,
+        "uom_id": 2,
+        "name": "Paprika Hijau",
+        "slug": "paprika-hijau",
+        "description": "Paprika hijau segar.",
+        "thumbnail": "paprika-hijau.jpg",
+        "price": 38000,
+        "is_active": true
+    },
+    {
+        "category_id": 1,
+        "uom_id": 2,
+        "name": "Zucchini",
+        "slug": "zucchini",
+        "description": "Zucchini hijau segar.",
+        "thumbnail": "zucchini.jpg",
+        "price": 28000,
+        "is_active": true
+    },
+    {
+        "category_id": 1,
+        "uom_id": 1,
+        "name": "Selada Keriting",
+        "slug": "selada-keriting",
+        "description": "Selada hijau untuk salad.",
+        "thumbnail": "selada.jpg",
+        "price": 15000,
+        "is_active": true
+    },
+
+    {
+        "category_id": 2,
+        "uom_id": 2,
+        "name": "Pisang Cavendish",
+        "slug": "pisang-cavendish",
+        "description": "Pisang manis kaya kalium.",
+        "thumbnail": "pisang-cavendish.jpg",
+        "price": 22000,
+        "is_active": true
+    },
+    {
+        "category_id": 2,
+        "uom_id": 2,
+        "name": "Apel Fuji",
+        "slug": "apel-fuji",
+        "description": "Apel fuji mani manis dan renyah.",
+        "thumbnail": "apel-fuji.jpg",
+        "price": 35000,
+        "is_active": true
+    },
+    {
+        "category_id": 2,
+        "uom_id": 2,
+        "name": "Jeruk Siam",
+        "slug": "jeruk-siam",
+        "description": "Jeruk siam manis berkulit tipis.",
+        "thumbnail": "jeruk-siam.jpg",
+        "price": 20000,
+        "is_active": true
+    },
+    {
+        "category_id": 2,
+        "uom_id": 2,
+        "name": "Mangga Harum Manis",
+        "slug": "mangga-harum-manis",
+        "description": "Mangga matang pohon manis.",
+        "thumbnail": "mangga.jpg",
+        "price": 28000,
+        "is_active": true
+    },
+    {
+        "category_id": 2,
+        "uom_id": 2,
+        "name": "Alpukat Mentega",
+        "slug": "alpukat-mentega",
+        "description": "Alpukat berdaging tebal.",
+        "thumbnail": "alpukat.jpg",
+        "price": 32000,
+        "is_active": true
+    },
+    {
+        "category_id": 2,
+        "uom_id": 2,
+        "name": "Semangka Merah Tanpa Biji",
+        "slug": "semangka-merah",
+        "description": "Semangka segar dan manis.",
+        "thumbnail": "semangka.jpg",
+        "price": 10000,
+        "is_active": true
+    },
+    {
+        "category_id": 2,
+        "uom_id": 2,
+        "name": "Melon Hijau",
+        "slug": "melon-hijau",
+        "description": "Melon manis berdaging hijau.",
+        "thumbnail": "melon.jpg",
+        "price": 15000,
+        "is_active": true
+    },
+    {
+        "category_id": 2,
+        "uom_id": 2,
+        "name": "Nanas Honi",
+        "slug": "nanas-honi",
+        "description": "Nanas manis tidak gatal di lidah.",
+        "thumbnail": "nanas.jpg",
+        "price": 18000,
+        "is_active": true
+    },
+    {
+        "category_id": 2,
+        "uom_id": 2,
+        "name": "Anggur Red Globe",
+        "slug": "anggur-red-globe",
+        "description": "Anggur merah manis manis.",
+        "thumbnail": "anggur.jpg",
+        "price": 60000,
+        "is_active": true
+    },
+    {
+        "category_id": 2,
+        "uom_id": 3,
+        "name": "Stroberi",
+        "slug": "stroberi",
+        "description": "Stroberi manis asam per pack.",
+        "thumbnail": "stroberi.jpg",
+        "price": 20000,
+        "is_active": true
+    },
+    {
+        "category_id": 2,
+        "uom_id": 2,
+        "name": "Buah Naga Merah",
+        "slug": "buah-naga-merah",
+        "description": "Buah naga manis segar.",
+        "thumbnail": "buah-naga.jpg",
+        "price": 22000,
+        "is_active": true
+    },
+    {
+        "category_id": 2,
+        "uom_id": 2,
+        "name": "Pepaya Calina (California)",
+        "slug": "pepaya-california",
+        "description": "Pepaya manis manis.",
+        "thumbnail": "pepaya.jpg",
+        "price": 9000,
+        "is_active": true
+    },
+    {
+        "category_id": 2,
+        "uom_id": 2,
+        "name": "Pear Century",
+        "slug": "pear-century",
+        "description": "Pir renyah banyak air.",
+        "thumbnail": "pear.jpg",
+        "price": 26000,
+        "is_active": true
+    },
+    {
+        "category_id": 2,
+        "uom_id": 2,
+        "name": "Salak Pondoh",
+        "slug": "salak-pondoh",
+        "description": "Salak manis dan renyah.",
+        "thumbnail": "salak.jpg",
+        "price": 14000,
+        "is_active": true
+    },
+    {
+        "category_id": 2,
+        "uom_id": 2,
+        "name": "Lemon Impor",
+        "slug": "lemon-impor",
+        "description": "Lemon kuning segar.",
+        "thumbnail": "lemon.jpg",
+        "price": 40000,
+        "is_active": true
+    },
+
+    {
+        "category_id": 3,
+        "uom_id": 2,
+        "name": "Daging Sapi Render/Paha",
+        "slug": "daging-sapi-paha",
+        "description": "Daging sapi segar cocok untuk rendang.",
+        "thumbnail": "daging-sapi.jpg",
+        "price": 135000,
+        "is_active": true
+    },
+    {
+        "category_id": 3,
+        "uom_id": 2,
+        "name": "Daging Sapi Giling",
+        "slug": "daging-sapi-giling",
+        "description": "Daging sapi cincang halus.",
+        "thumbnail": "daging-giling.jpg",
+        "price": 14000,
+        "is_active": true
+    },
+    {
+        "category_id": 3,
+        "uom_id": 2,
+        "name": "Iga Sapi",
+        "slug": "iga-sapi",
+        "description": "Iga sapi potong untuk sup.",
+        "thumbnail": "iga-sapi.jpg",
+        "price": 110000,
+        "is_active": true
+    },
+    {
+        "category_id": 3,
+        "uom_id": 2,
+        "name": "Dada Ayam Fillet",
+        "slug": "dada-ayam-fillet",
+        "description": "Dada ayam tanpa tulang dan kulit.",
+        "thumbnail": "dada-ayam.jpg",
+        "price": 55000,
+        "is_active": true
+    },
+    {
+        "category_id": 3,
+        "uom_id": 2,
+        "name": "Paha Ayam",
+        "slug": "paha-ayam",
+        "description": "Paha ayam utuh segar.",
+        "thumbnail": "paha-ayam.jpg",
+        "price": 45000,
+        "is_active": true
+    },
+    {
+        "category_id": 3,
+        "uom_id": 2,
+        "name": "Ayam Utuh Broiler",
+        "slug": "ayam-utuh-broiler",
+        "description": "Ayam potong bersih ukuran 1kg.",
+        "thumbnail": "ayam-utuh.jpg",
+        "price": 38000,
+        "is_active": true
+    },
+    {
+        "category_id": 3,
+        "uom_id": 2,
+        "name": "Ayam Kampung Utuh",
+        "slug": "ayam-kampung-utuh",
+        "description": "Ayam kampung asli segar.",
+        "thumbnail": "ayam-kampung.jpg",
+        "price": 75000,
+        "is_active": true
+    },
+    {
+        "category_id": 3,
+        "uom_id": 2,
+        "name": "Sayap Ayam",
+        "slug": "sayap-ayam",
+        "description": "Sayap ayam segar.",
+        "thumbnail": "sayap-ayam.jpg",
+        "price": 40000,
+        "is_active": true
+    },
+    {
+        "category_id": 3,
+        "uom_id": 2,
+        "name": "Daging Kambing Potong",
+        "slug": "daging-kambing-potong",
+        "description": "Daging kambing segar untuk gulai/sate.",
+        "thumbnail": "daging-kambing.jpg",
+        "price": 150000,
+        "is_active": true
+    },
+    {
+        "category_id": 3,
+        "uom_id": 2,
+        "name": "Daging Bebek Utuh",
+        "slug": "daging-bebek-utuh",
+        "description": "Bebek karkas bersihan.",
+        "thumbnail": "bebek-utuh.jpg",
+        "price": 65000,
+        "is_active": true
+    },
+    {
+        "category_id": 3,
+        "uom_id": 2,
+        "name": "Hati Ayam",
+        "slug": "hati-ayam",
+        "description": "Hati dan ampela ayam segar.",
+        "thumbnail": "hati-ayam.jpg",
+        "price": 25000,
+        "is_active": true
+    },
+    {
+        "category_id": 3,
+        "uom_id": 2,
+        "name": "Daging Sapi Slice (Shortplate)",
+        "slug": "daging-sapi-slice",
+        "description": "Daging sapi iris tipis untuk shabu/grill.",
+        "thumbnail": "beef-slice.jpg",
+        "price": 65000,
+        "is_active": true
+    },
+
+    {
+        "category_id": 4,
+        "uom_id": 2,
+        "name": "Ikan Gurame Segar",
+        "slug": "ikan-gurame-segar",
+        "description": "Ikan gurame hidup/segar.",
+        "thumbnail": "gurame.jpg",
+        "price": 55000,
+        "is_active": true
+    },
+    {
+        "category_id": 4,
+        "uom_id": 2,
+        "name": "Ikan Nila Merah",
+        "slug": "ikan-nila-merah",
+        "description": "Ikan nila segar bersihan.",
+        "thumbnail": "nila.jpg",
+        "price": 38000,
+        "is_active": true
+    },
+    {
+        "category_id": 4,
+        "uom_id": 2,
+        "name": "Ikan Lele Segar",
+        "slug": "ikan-lele-segar",
+        "description": "Ikan lele segar bersihan.",
+        "thumbnail": "lele.jpg",
+        "price": 28000,
+        "is_active": true
+    },
+    {
+        "category_id": 4,
+        "uom_id": 2,
+        "name": "Ikan Tongkol Segar",
+        "slug": "ikan-tongkol-segar",
+        "description": "Ikan tongkol potong/utuh.",
+        "thumbnail": "tongkol.jpg",
+        "price": 35000,
+        "is_active": true
+    },
+    {
+        "category_id": 4,
+        "uom_id": 2,
+        "name": "Ikan Kembung",
+        "slug": "ikan-kembung",
+        "description": "Ikan kembung Banjar segar.",
+        "thumbnail": "kembung.jpg",
+        "price": 42000,
+        "is_active": true
+    },
+    {
+        "category_id": 4,
+        "uom_id": 2,
+        "name": "Ikan Bandeng",
+        "slug": "ikan-bandeng",
+        "description": "Ikan bandeng segar.",
+        "thumbnail": "bandeng.jpg",
+        "price": 36000,
+        "is_active": true
+    },
+    {
+        "category_id": 4,
+        "uom_id": 2,
+        "name": "Udang Vaname Segar",
+        "slug": "udang-vaname-segar",
+        "description": "Udang ukuran sedang segar.",
+        "thumbnail": "udang-vaname.jpg",
+        "price": 85000,
+        "is_active": true
+    },
+    {
+        "category_id": 4,
+        "uom_id": 2,
+        "name": "Cumi-cumi Segar",
+        "slug": "cumi-cumi-segar",
+        "description": "Cumi sero segar manis.",
+        "thumbnail": "cumi.jpg",
+        "price": 90000,
+        "is_active": true
+    },
+    {
+        "category_id": 4,
+        "uom_id": 2,
+        "name": "Kerang Dara",
+        "slug": "kerang-dara",
+        "description": "Kerang dara segar mentah.",
+        "thumbnail": "kerang-dara.jpg",
+        "price": 25000,
+        "is_active": true
+    },
+    {
+        "category_id": 4,
+        "uom_id": 2,
+        "name": "Fillet Ikan Salmon",
+        "slug": "fillet-ikan-salmon",
+        "description": "Salmon Norwegia segar tanpa duri.",
+        "thumbnail": "salmon.jpg",
+        "price": 280000,
+        "is_active": true
+    },
+    {
+        "category_id": 4,
+        "uom_id": 2,
+        "name": "Fillet Ikan Dori / Patin",
+        "slug": "fillet-ikan-dori",
+        "description": "Fillet dori beku tanpa tulang.",
+        "thumbnail": "dori.jpg",
+        "price": 40000,
+        "is_active": true
+    },
+    {
+        "category_id": 4,
+        "uom_id": 2,
+        "name": "Kepiting Bakau Segar",
+        "slug": "kepiting-bakau-segar",
+        "description": "Kepiting hidup bertelur/jantan.",
+        "thumbnail": "kepiting.jpg",
+        "price": 120000,
+        "is_active": true
+    },
+    {
+        "category_id": 4,
+        "uom_id": 2,
+        "name": "Ikan Kakap Merah",
+        "slug": "ikan-kakap-merah",
+        "description": "Ikan kakap laut segar.",
+        "thumbnail": "kakap-merah.jpg",
+        "price": 75000,
+        "is_active": true
+    },
+
+    {
+        "category_id": 5,
+        "uom_id": 2,
+        "name": "Bawang Merah Lokal",
+        "slug": "bawang-merah-lokal",
+        "description": "Bawang merah Brebes wangi.",
+        "thumbnail": "bawang-merah.jpg",
+        "price": 35000,
+        "is_active": true
+    },
+    {
+        "category_id": 5,
+        "uom_id": 2,
+        "name": "Bawang Putih Kating",
+        "slug": "bawang-putih-kating",
+        "description": "Bawang putih kating kualitas super.",
+        "thumbnail": "bawang-putih.jpg",
+        "price": 40000,
+        "is_active": true
+    },
+    {
+        "category_id": 5,
+        "uom_id": 2,
+        "name": "Bawang Bombay",
+        "slug": "bawang-bombay",
+        "description": "Bawang bombay kuning manis.",
+        "thumbnail": "bawang-bombay.jpg",
+        "price": 25000,
+        "is_active": true
+    },
+    {
+        "category_id": 5,
+        "uom_id": 2,
+        "name": "Cabai Merah Keriting",
+        "slug": "cabai-merah-keriting",
+        "description": "Cabai merah pedas segar.",
+        "thumbnail": "cabai-merah.jpg",
+        "price": 45000,
+        "is_active": true
+    },
+    {
+        "category_id": 5,
+        "uom_id": 2,
+        "name": "Cabai Rawit Merah",
+        "slug": "cabai-rawit-merah",
+        "description": "Cabai rawit setan super pedas.",
+        "thumbnail": "cabai-rawit.jpg",
+        "price": 60000,
+        "is_active": true
+    },
+    {
+        "category_id": 5,
+        "uom_id": 2,
+        "name": "Cabai Hijau Besar",
+        "slug": "cabai-hijau-besar",
+        "description": "Cabai hijau untuk masakan/sambal hijau.",
+        "thumbnail": "cabai-hijau.jpg",
+        "price": 30000,
+        "is_active": true
+    },
+    {
+        "category_id": 5,
+        "uom_id": 2,
+        "name": "Jahe Gajah",
+        "slug": "jahe-gajah",
+        "description": "Jahe segar penghangat tubuh.",
+        "thumbnail": "jahe.jpg",
+        "price": 24000,
+        "is_active": true
+    },
+    {
+        "category_id": 5,
+        "uom_id": 2,
+        "name": "Kunyit Segar",
+        "slug": "kunyit-segar",
+        "description": "Kunyit tua pewarna dan bumbu alami.",
+        "thumbnail": "kunyit.jpg",
+        "price": 15000,
+        "is_active": true
+    },
+    {
+        "category_id": 5,
+        "uom_id": 2,
+        "name": "Lengkuas / Laos",
+        "slug": "lengkuas",
+        "description": "Lengkuas muda harum.",
+        "thumbnail": "lengkuas.jpg",
+        "price": 16000,
+        "is_active": true
+    },
+    {
+        "category_id": 5,
+        "uom_id": 2,
+        "name": "Kencur",
+        "slug": "kencur",
+        "description": "Kencur wangi untuk bumbu seblak/urap.",
+        "thumbnail": "kencur.jpg",
+        "price": 28000,
+        "is_active": true
+    },
+    {
+        "category_id": 5,
+        "uom_id": 1,
+        "name": "Serai / Sereh",
+        "slug": "serai",
+        "description": "Serai dapur per ikat.",
+        "thumbnail": "serai.jpg",
+        "price": 3000,
+        "is_active": true
+    },
+    {
+        "category_id": 5,
+        "uom_id": 3,
+        "name": "Daun Jeruk Purut",
+        "slug": "daun-jeruk-purut",
+        "description": "Daun jeruk wangi per pack.",
+        "thumbnail": "daun-jeruk.jpg",
+        "price": 4000,
+        "is_active": true
+    },
+    {
+        "category_id": 5,
+        "uom_id": 3,
+        "name": "Daun Salam",
+        "slug": "daun-salam",
+        "description": "Daun salam segar per pack.",
+        "thumbnail": "daun-salam.jpg",
+        "price": 3000,
+        "is_active": true
+    },
+    {
+        "category_id": 5,
+        "uom_id": 3,
+        "name": "Ketumbar Bubuk",
+        "slug": "ketumbar-bubuk",
+        "description": "Ketumbar murni kemasan.",
+        "thumbnail": "ketumbar.jpg",
+        "price": 5000,
+        "is_active": true
+    },
+    {
+        "category_id": 5,
+        "uom_id": 3,
+        "name": "Merica / Lada Putih Bubuk",
+        "slug": "merica-bubuk",
+        "description": "Lada murni asli pedas.",
+        "thumbnail": "merica.jpg",
+        "price": 7000,
+        "is_active": true
+    },
+
+    {
+        "category_id": 6,
+        "uom_id": 2,
+        "name": "Beras Setra Ramos 5kg",
+        "slug": "beras-setra-ramos-5kg",
+        "description": "Beras putih pulen kualitas medium super.",
+        "thumbnail": "beras-ramos.jpg",
+        "price": 72000,
+        "is_active": true
+    },
+    {
+        "category_id": 6,
+        "uom_id": 2,
+        "name": "Beras Merah Organik 1kg",
+        "slug": "beras-merah-organik-1kg",
+        "description": "Beras merah kaya serat untuk diet.",
+        "thumbnail": "beras-merah.jpg",
+        "price": 25000,
+        "is_active": true
+    },
+    {
+        "category_id": 6,
+        "uom_id": 2,
+        "name": "Beras Pandan Wangi 5kg",
+        "slug": "beras-pandan-wangi-5kg",
+        "description": "Beras alami beraroma pandan.",
+        "thumbnail": "beras-pandan.jpg",
+        "price": 88000,
+        "is_active": true
+    },
+    {
+        "category_id": 6,
+        "uom_id": 2,
+        "name": "Kacang Tanah Kupas",
+        "slug": "kacang-tanah-kupas",
+        "description": "Kacang tanah bersih siap olah.",
+        "thumbnail": "kacang-tanah.jpg",
+        "price": 32000,
+        "is_active": true
+    },
+    {
+        "category_id": 6,
+        "uom_id": 2,
+        "name": "Kacang Hijau",
+        "slug": "kacang-hijau",
+        "description": "Kacang hijau pilihan untuk bubur.",
+        "thumbnail": "kacang-hijau.jpg",
+        "price": 26000,
+        "is_active": true
+    },
+    {
+        "category_id": 6,
+        "uom_id": 2,
+        "name": "Kacang Merah Kering",
+        "slug": "kacang-merah-kering",
+        "description": "Kacang merah untuk sup/rendang.",
+        "thumbnail": "kacang-merah.jpg",
+        "price": 30000,
+        "is_active": true
+    },
+    {
+        "category_id": 6,
+        "uom_id": 2,
+        "name": "Kacang Kedelai Lokal",
+        "slug": "kacang-kedelai-lokal",
+        "description": "Biji kedelai untuk susu/tempe.",
+        "thumbnail": "kedelai.jpg",
+        "price": 16000,
+        "is_active": true
+    },
+    {
+        "category_id": 6,
+        "uom_id": 2,
+        "name": "Jagung Manis Pipil",
+        "slug": "jagung-manis-pipil",
+        "description": "Jagung pipil manis segar.",
+        "thumbnail": "jagung-pipil.jpg",
+        "price": 18000,
+        "is_active": true
+    },
+    {
+        "category_id": 6,
+        "uom_id": 3,
+        "name": "Beras Ketan Putih",
+        "slug": "beras-ketan-putih",
+        "description": "Beras ketan mutu terbaik.",
+        "thumbnail": "ketan-putih.jpg",
+        "price": 18000,
+        "is_active": true
+    },
+    {
+        "category_id": 6,
+        "uom_id": 3,
+        "name": "Beras Shirataki 250gr",
+        "slug": "beras-shirataki",
+        "description": "Beras rendah kalori dan karbohidrat.",
+        "thumbnail": "shirataki.jpg",
+        "price": 45000,
+        "is_active": true
+    },
+
+    {
+        "category_id": 7,
+        "uom_id": 2,
+        "name": "Telur Ayam Negeri 1kg",
+        "slug": "telur-ayam-negeri-1kg",
+        "description": "Telur ayam segar isi 16-17 butir.",
+        "thumbnail": "telur-ayam.jpg",
+        "price": 28000,
+        "is_active": true
+    },
+    {
+        "category_id": 7,
+        "uom_id": 3,
+        "name": "Telur Ayam Kampung (Isi 10)",
+        "slug": "telur-ayam-kampung",
+        "description": "Telur ayam kampung asli kaya nutrisi.",
+        "thumbnail": "telur-kampung.jpg",
+        "price": 25000,
+        "is_active": true
+    },
+    {
+        "category_id": 7,
+        "uom_id": 3,
+        "name": "Telur Puyuh (Isi 30)",
+        "slug": "telur-puyuh",
+        "description": "Telur puyuh mentah segar.",
+        "thumbnail": "telur-puyuh.jpg",
+        "price": 15000,
+        "is_active": true
+    },
+    {
+        "category_id": 7,
+        "uom_id": 4,
+        "name": "Susu UHT Full Cream 1L",
+        "slug": "susu-uht-full-cream-1l",
+        "description": "Susu cair UHT rasa original.",
+        "thumbnail": "susu-uht.jpg",
+        "price": 19000,
+        "is_active": true
+    },
+    {
+        "category_id": 7,
+        "uom_id": 4,
+        "name": "Susu Evaporasi 380g",
+        "slug": "susu-evaporasi",
+        "description": "Susu evaporasi masakan & minuman.",
+        "thumbnail": "susu-evaporasi.jpg",
+        "price": 16000,
+        "is_active": true
+    },
+    {
+        "category_id": 7,
+        "uom_id": 3,
+        "name": "Keju Cheddar Block 160g",
+        "slug": "keju-cheddar-block",
+        "description": "Keju olahan siap parut.",
+        "thumbnail": "keju-cheddar.jpg",
+        "price": 22000,
+        "is_active": true
+    },
+    {
+        "category_id": 7,
+        "uom_id": 3,
+        "name": "Keju Mozzarella 200g",
+        "slug": "keju-mozzarella",
+        "description": "Keju leleh berkualiatas.",
+        "thumbnail": "mozzarella.jpg",
+        "price": 38000,
+        "is_active": true
+    },
+    {
+        "category_id": 7,
+        "uom_id": 3,
+        "name": "Mentega Unsalted / Unsalted Butter 200g",
+        "slug": "unsalted-butter",
+        "description": "Mentega tawar untuk olahan kue/baking.",
+        "thumbnail": "butter.jpg",
+        "price": 45000,
+        "is_active": true
+    },
+    {
+        "category_id": 7,
+        "uom_id": 3,
+        "name": "Yogurt Plain 500ml",
+        "slug": "yogurt-plain-500ml",
+        "description": "Yogurt tawar kaya probiotik.",
+        "thumbnail": "yogurt.jpg",
+        "price": 30000,
+        "is_active": true
+    },
+
+    {
+        "category_id": 8,
+        "uom_id": 4,
+        "name": "Minyak Goreng Sawit 2L",
+        "slug": "minyak-goreng-sawit-2l",
+        "description": "Minyak goreng kelapa sawit ganda penyaringan.",
+        "thumbnail": "minyak-goreng.jpg",
+        "price": 34000,
+        "is_active": true
+    },
+    {
+        "category_id": 8,
+        "uom_id": 4,
+        "name": "Minyak Zaitun (Extra Virgin Olive Oil) 500ml",
+        "slug": "extra-virgin-olive-oil",
+        "description": "Minyak zaitun murni untuk salad/dressing.",
+        "thumbnail": "evoo.jpg",
+        "price": 95000,
+        "is_active": true
+    },
+    {
+        "category_id": 8,
+        "uom_id": 4,
+        "name": "Minyak Wijen 110ml",
+        "slug": "minyak-wijen-110ml",
+        "description": "Minyak wijen murni aroma harum.",
+        "thumbnail": "minyak-wijen.jpg",
+        "price": 28000,
+        "is_active": true
+    },
+    {
+        "category_id": 8,
+        "uom_id": 2,
+        "name": "Gula Pasir Putih 1kg",
+        "slug": "gula-pasir-putih-1kg",
+        "description": "Gula tebu murni manis alami.",
+        "thumbnail": "gula-pasir.jpg",
+        "price": 17500,
+        "is_active": true
+    },
+    {
+        "category_id": 8,
+        "uom_id": 2,
+        "name": "Gula Jawa / Gula Merah 500g",
+        "slug": "gula-jawa-500g",
+        "description": "Gula palma cetak asli.",
+        "thumbnail": "gula-jawa.jpg",
+        "price": 12000,
+        "is_active": true
+    },
+    {
+        "category_id": 8,
+        "uom_id": 3,
+        "name": "Garam Dapur Beryodium 500g",
+        "slug": "garam-dapur-500g",
+        "description": "Garam halus beryodium tinggi.",
+        "thumbnail": "garam.jpg",
+        "price": 4000,
+        "is_active": true
+    },
+    {
+        "category_id": 8,
+        "uom_id": 2,
+        "name": "Tepung Terigu Protein Sedang 1kg",
+        "slug": "tepung-terigu-sedang-1kg",
+        "description": "Tepung serbaguna untuk gorengan & kue.",
+        "thumbnail": "terigu.jpg",
+        "price": 13000,
+        "is_active": true
+    },
+    {
+        "category_id": 8,
+        "uom_id": 2,
+        "name": "Tepung Tapioka / Sagu 500g",
+        "slug": "tepung-tapioka-500g",
+        "description": "Tepung pati singkong kenyal.",
+        "thumbnail": "tapioka.jpg",
+        "price": 8000,
+        "is_active": true
+    },
+    {
+        "category_id": 8,
+        "uom_id": 2,
+        "name": "Tepung Maizena 200g",
+        "slug": "tepung-maizena-200g",
+        "description": "Tepung pati jagung pengental kuah.",
+        "thumbnail": "maizena.jpg",
+        "price": 6000,
+        "is_active": true
+    },
+    {
+        "category_id": 8,
+        "uom_id": 2,
+        "name": "Tepung Beras 500g",
+        "slug": "tepung-beras-500g",
+        "description": "Tepung beras putih halus.",
+        "thumbnail": "tepung-beras.jpg",
+        "price": 9000,
+        "is_active": true
+    },
+    {
+        "category_id": 8,
+        "uom_id": 4,
+        "name": "Kecap Manis 520ml",
+        "slug": "kecap-manis-520ml",
+        "description": "Kecap manis kedelai hitam pilihan.",
+        "thumbnail": "kecap-manis.jpg",
+        "price": 24000,
+        "is_active": true
+    },
+    {
+        "category_id": 8,
+        "uom_id": 4,
+        "name": "Saus Tiram 270ml",
+        "slug": "saus-tiram-270ml",
+        "description": "Saus tiram gurih untuk tumisan.",
+        "thumbnail": "saus-tiram.jpg",
+        "price": 18000,
+        "is_active": true
+    },
+    {
+        "category_id": 8,
+        "uom_id": 4,
+        "name": "Saus Sambal Botol 335ml",
+        "slug": "saus-sambal-335ml",
+        "description": "Saus cabai pedas gurih.",
+        "thumbnail": "saus-sambal.jpg",
+        "price": 15000,
+        "is_active": true
+    },
+    {
+        "category_id": 8,
+        "uom_id": 4,
+        "name": "Santan Kelapa Cair 200ml",
+        "slug": "santan-kelapa-cair-200ml",
+        "description": "Santan kelapa siap pakai.",
+        "thumbnail": "santan.jpg",
+        "price": 4000,
+        "is_active": true
+    },
+    {
+        "category_id": 8,
+        "uom_id": 3,
+        "name": "Margarin Multiguna 200g",
+        "slug": "margarin-multiguna-200g",
+        "description": "Margarin untuk memasak dan roti.",
+        "thumbnail": "margarin.jpg",
+        "price": 8500,
+        "is_active": true
+    }
+]
