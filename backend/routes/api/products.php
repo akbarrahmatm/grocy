@@ -11,6 +11,8 @@ Route::get('uom', [UomController::class, 'index']);
 Route::get('uom/{uom}', [UomController::class, 'show']);
 Route::get('product', [ProductController::class, 'index']);
 Route::get('product/{product}', [ProductController::class, 'show']);
+Route::get('webhook/products', [ProductController::class, 'all'])
+    ->middleware('webhook.secret');
 
 Route::middleware(['auth:sanctum', 'admin'])->group(function () {
     Route::post('category', [CategoryController::class, 'store']);
