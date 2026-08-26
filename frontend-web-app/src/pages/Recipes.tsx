@@ -64,8 +64,12 @@ export default function Recipes() {
       setChecked(res.dish ?? q);
       fetchHistory();
     } catch (err) {
-      const msg = err instanceof Error ? err.message : "Failed to analyze recipe";
-      if (err instanceof Error && (err as unknown as { status?: number }).status === 401) {
+      const msg =
+        err instanceof Error ? err.message : "Failed to analyze recipe";
+      if (
+        err instanceof Error &&
+        (err as unknown as { status?: number }).status === 401
+      ) {
         push("Session expired, please sign in again", "error");
         navigate("/login");
       }
@@ -82,7 +86,10 @@ export default function Recipes() {
       setChecked(res.dish);
       window.scrollTo({ top: 0, behavior: "smooth" });
     } catch (err) {
-      push(err instanceof Error ? err.message : "Failed to load history", "error");
+      push(
+        err instanceof Error ? err.message : "Failed to load history",
+        "error"
+      );
     }
   };
 
@@ -96,7 +103,8 @@ export default function Recipes() {
     }
   };
 
-  const qtyOf = (id: number) => items.find((it) => it.product_id === id)?.qty ?? 0;
+  const qtyOf = (id: number) =>
+    items.find((it) => it.product_id === id)?.qty ?? 0;
 
   const addToCart = async (id: number) => {
     if (!user) {
@@ -113,7 +121,10 @@ export default function Recipes() {
       await add(id);
       push("Added to cart");
     } catch (err) {
-      push(err instanceof Error ? err.message : "Failed to add to cart", "error");
+      push(
+        err instanceof Error ? err.message : "Failed to add to cart",
+        "error"
+      );
     }
   };
 
@@ -133,7 +144,10 @@ export default function Recipes() {
     try {
       await setQty(item.id, item.qty + delta);
     } catch (err) {
-      push(err instanceof Error ? err.message : "Failed to update quantity", "error");
+      push(
+        err instanceof Error ? err.message : "Failed to update quantity",
+        "error"
+      );
     }
   };
 
@@ -142,11 +156,12 @@ export default function Recipes() {
       <Header />
 
       <section className="ai-hero">
-        <span className="hero-eyebrow">AI Recipe</span>
         <h1>
           What are we <em>cooking</em>?
         </h1>
-        <p className="ai-sub">Tell us the dish. We&rsquo;ll find every ingredient you need.</p>
+        <p className="ai-sub">
+          Tell us the dish. We&rsquo;ll find every ingredient you need.
+        </p>
 
         <form
           className="search-bar ai-search"
@@ -189,10 +204,14 @@ export default function Recipes() {
       <div className="px-4 mt-4">
         <div className="flex items-center justify-between">
           <h3 className="font-semibold text-sm">History</h3>
-          {historyLoading && <span className="text-xs opacity-60">Loading…</span>}
+          {historyLoading && (
+            <span className="text-xs opacity-60">Loading…</span>
+          )}
         </div>
         {!user ? (
-          <p className="text-xs opacity-60 mt-1">Sign in to see your recipe history.</p>
+          <p className="text-xs opacity-60 mt-1">
+            Sign in to see your recipe history.
+          </p>
         ) : histories.length === 0 && !historyLoading ? (
           <p className="text-xs opacity-60 mt-1">No history yet.</p>
         ) : (
@@ -208,7 +227,8 @@ export default function Recipes() {
                 >
                   <p className="text-sm font-medium truncate">{h.dish}</p>
                   <p className="text-[11px] opacity-60">
-                    {new Date(h.created_at).toLocaleString()} • {h.total_items} items
+                    {new Date(h.created_at).toLocaleString()} • {h.total_items}{" "}
+                    items
                   </p>
                 </button>
                 <button
@@ -250,27 +270,38 @@ export default function Recipes() {
           )}
 
           {data.recipe?.length ? (
-            <div className="mt-6 px-4">
+            <div
+              className={`mt-6 px-4 ${
+                !data.additional_items?.length ? "pb-28" : ""
+              }`}
+            >
               <h3 className="font-semibold text-sm mb-2">Steps</h3>
               <ol className="list-decimal list-inside space-y-1 text-sm opacity-80">
                 {data.recipe.map((step, i) => (
-                  <li key={i}>{step}</li>
+                  <li key={i} className="leading-relaxed py-1">
+                    {step}
+                  </li>
                 ))}
               </ol>
             </div>
           ) : null}
 
           {data.additional_items?.length ? (
-            <div className="mt-4 px-4">
+            <div className="mt-4 px-4 pb-28">
               <h3 className="font-semibold text-sm mb-1">Not in store</h3>
-              <p className="text-xs opacity-60">
+              <p className="text-xs opacity-60 leading-relaxed">
                 {data.additional_items.map((a) => a.ingredient).join(", ")}
               </p>
             </div>
           ) : null}
+          {!data.recipe?.length && !data.additional_items?.length ? (
+            <div className="pb-28" />
+          ) : null}
         </>
       ) : (
-        <p className="ai-status">Enter a dish above or pick an idea to get ingredient suggestions.</p>
+        <p className="ai-status">
+          Enter a dish above or pick an idea to get ingredient suggestions.
+        </p>
       )}
 
       <BottomNav active="recipes" cartCount={count} />

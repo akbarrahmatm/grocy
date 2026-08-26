@@ -78,11 +78,15 @@ URL: https://grocy.akbarrahmatm.my.id/
 
 ### E-commerce (Customer)
 
-![inventory flow](backend/docs/Untitled-2026-02-15-1641ec.png)
+![E-commerce Flow](backend/docs/Untitled-2026-02-15-1641ec.png)
+
+> Register/Login → Browse Product → Add to Cart → Checkout → Create/Select Address → Payment Via Midtrans → Order Complete
 
 ### Inventory (Admin)
 
-![inventory flow](backend/docs/Untitled-2026-02-15-1641.png)
+![Inventory Flow](backend/docs/Untitled-2026-02-15-1641.png)
+
+> Setup categories ⇒ UoM ⇒ products → Stock in/out ⇒ Stock adjustment → Every change recorded ⇒ Stock movement log (audit trail) → Order placed & paid ⇒ stock deducted automatically
 
 ### AI Recipe Recommendation (n8n workflow)
 
