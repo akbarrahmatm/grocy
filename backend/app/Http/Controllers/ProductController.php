@@ -13,7 +13,10 @@ class ProductController extends Controller
 
     public function index(Request $request): JsonResponse
     {
-        return response()->json($this->products->list($request->query('search')));
+        return response()->json($this->products->list(
+            $request->query('search'),
+            $request->query('category_id') !== null ? (int) $request->query('category_id') : null
+        ));
     }
 
     public function all(): JsonResponse

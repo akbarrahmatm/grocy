@@ -59,6 +59,15 @@ export default function Login() {
           {loading ? "Sign in…" : "Sign in"}
         </Button>
 
+        <Button
+          type="button"
+          variant="ghost"
+          className="w-full"
+          onClick={() => navigate("/")}
+        >
+          Back to Explore
+        </Button>
+
         <p className="text-sm text-[var(--ink-soft)] text-center">
           Doesn't have account?{" "}
           <Link

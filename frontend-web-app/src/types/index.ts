@@ -29,6 +29,13 @@ export interface Toast {
   variant: "success" | "error";
 }
 
+export interface Category {
+  id: number;
+  name: string;
+  slug: string;
+  is_active: boolean;
+}
+
 export interface Product {
   id: number;
   category_id: number;

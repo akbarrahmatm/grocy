@@ -94,9 +94,10 @@ async function request<T>(path: string, init: RequestInit = {}): Promise<T> {
   return body as T;
 }
 
-function queryString(opts: { search?: string; page?: number } = {}): string {
+function queryString(opts: { search?: string; page?: number; category_id?: number } = {}): string {
   const params = new URLSearchParams();
   if (opts.search) params.set("search", opts.search);
+  if (opts.category_id) params.set("category_id", String(opts.category_id));
   if (opts.page && opts.page > 1) params.set("page", String(opts.page));
   return params.toString();
 }
@@ -123,9 +124,14 @@ export const authApi = {
 };
 
 export const productApi = {
-  list: (opts: { search?: string; page?: number } = {}) =>
+  list: (opts: { search?: string; page?: number; category_id?: number } = {}) =>
     request<Paginated<Product>>(`/product?${queryString(opts)}`),
   show: (id: number) => request<Product>(`/product/${id}`),
+};
+
+export const categoryApi = {
+  list: (opts: { search?: string; page?: number } = {}) =>
+    request<Paginated<import("@/types").Category>>(`/category?${queryString(opts)}`),
 };
 
 export type RecipeSuggestResponse = {

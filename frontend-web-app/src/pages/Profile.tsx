@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
-import { MapPin, Package } from "lucide-react";
+import { LogOut, MapPin, Package } from "lucide-react";
 import "@/App.css";
 import BottomNav from "@/components/BottomNav";
 import { useAuth } from "@/context/AuthContext";
@@ -70,7 +70,9 @@ export default function Profile() {
           onClick={handleLogout}
           disabled={loggingOut}
         >
-          <span className="menu-icon">↩</span>
+          <span className="menu-icon">
+            <LogOut className="w-4 h-4 text-red-600" />
+          </span>
           <span className="menu-text">
             <span className="t">
               {loggingOut ? "Signing out…" : "Sign out"}

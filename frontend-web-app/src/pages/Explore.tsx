@@ -10,8 +10,8 @@ import { useAuth } from "@/context/AuthContext";
 import { useCart } from "@/context/CartContext";
 import { useToast } from "@/hooks/useToast";
 import { useDebouncedValue } from "@/hooks/useDebouncedValue";
-import { productApi } from "@/lib/api";
-import type { Product } from "@/types";
+import { categoryApi, productApi } from "@/lib/api";
+import type { Category, Product } from "@/types";
 
 const ALL = "All";
 
@@ -24,7 +24,8 @@ export default function Explore() {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [query, setQuery] = useState("");
-  const [activeCategory, setActiveCategory] = useState(ALL);
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [activeCategoryId, setActiveCategoryId] = useState<number | null>(null);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(false);
   const [total, setTotal] = useState(0);
@@ -32,18 +33,49 @@ export default function Explore() {
 
   const sentinelRef = useRef<HTMLDivElement | null>(null);
   const pageRef = useRef(1);
+  const loadingRef = useRef(false);
 
+  // fetch categories once for tabs
+  useEffect(() => {
+    categoryApi
+      .list()
+      .then((res) => setCategories(res.data.filter((c) => c.is_active)))
+      .catch(() => {});
+  }, []);
+
+  const activeCategoryName = useMemo(() => {
+    if (activeCategoryId === null) return ALL;
+    return categories.find((c) => c.id === activeCategoryId)?.name ?? ALL;
+  }, [activeCategoryId, categories]);
+
+  const categoryNames = useMemo(() => {
+    return [ALL, ...categories.map((c) => c.name)];
+  }, [categories]);
+
+  // reset pagination when search or category changes
   useEffect(() => {
     pageRef.current = 1;
     setPage(1);
-  }, [debouncedQuery]);
+  }, [debouncedQuery, activeCategoryId]);
+
+  useEffect(() => {
+    pageRef.current = page;
+  }, [page]);
+
+  useEffect(() => {
+    loadingRef.current = loading;
+  }, [loading]);
 
   useEffect(() => {
     let cancelled = false;
     setLoading(true);
     setError(null);
     productApi
-      .list({ page, search: debouncedQuery.trim() || undefined })
+      .list({
+        page,
+        search: debouncedQuery.trim() || undefined,
+        category_id: activeCategoryId ?? undefined,
+      })
       .then((res) => {
         if (cancelled) return;
         const active = res.data.filter((p) => p.is_active);
@@ -63,7 +95,7 @@ export default function Explore() {
     return () => {
       cancelled = true;
     };
-  }, [page, debouncedQuery]);
+  }, [page, debouncedQuery, activeCategoryId]);
 
   useEffect(() => {
     const el = sentinelRef.current;
@@ -71,6 +103,7 @@ export default function Explore() {
     const io = new IntersectionObserver(
       (entries) => {
         if (entries.some((e) => e.isIntersecting)) {
+          if (loadingRef.current) return;
           const next = pageRef.current + 1;
           pageRef.current = next;
           setPage(next);
@@ -80,21 +113,16 @@ export default function Explore() {
     );
     io.observe(el);
     return () => io.disconnect();
-  }, [hasMore, error]);
+  }, [hasMore, error, loading]);
 
-  const categories = useMemo(() => {
-    const set = new Set<string>();
-    for (const p of products) {
-      if (p.category?.name) set.add(p.category.name);
+  const handleSelectCategory = (name: string) => {
+    if (name === ALL) {
+      setActiveCategoryId(null);
+      return;
     }
-    return [ALL, ...set];
-  }, [products]);
-
-  const filtered = useMemo(() => {
-    return products.filter(
-      (p) => activeCategory === ALL || p.category?.name === activeCategory
-    );
-  }, [products, activeCategory]);
+    const found = categories.find((c) => c.name === name);
+    setActiveCategoryId(found ? found.id : null);
+  };
 
   const toggleCart = async (id: number) => {
     if (!user) {
@@ -153,16 +181,14 @@ export default function Explore() {
       <Header />
       <Hero query={query} onQueryChange={setQuery} />
       <CategoryTabs
-        categories={Array.from(categories)}
-        active={activeCategory}
-        onSelect={setActiveCategory}
+        categories={Array.from(categoryNames)}
+        active={activeCategoryName}
+        onSelect={handleSelectCategory}
       />
 
       <div className="section-label">
         <h2>Fresh picks</h2>
-        <span>
-          {(activeCategory === ALL ? total : filtered.length)} products
-        </span>
+        <span>{total} products</span>
       </div>
 
       {error ? (
@@ -180,14 +206,14 @@ export default function Explore() {
             </div>
           ))}
         </div>
-      ) : filtered.length === 0 && !loading ? (
+      ) : products.length === 0 && !loading ? (
         <p className="text-sm text-[var(--ink-soft)] px-5 py-8 text-center">
           No products found{debouncedQuery ? ` for "${debouncedQuery}"` : ""}.
         </p>
       ) : (
         <>
           <div className="grid">
-            {filtered.map((product) => (
+            {products.map((product) => (
               <ProductCard
                 key={product.id}
                 product={product}
@@ -197,20 +223,25 @@ export default function Explore() {
               />
             ))}
           </div>
-          {loading && products.length > 0 && (
-            <div className="py-3 text-center">
-              <span className="text-xs text-[var(--ink-soft)]">Loading…</span>
+          {hasMore && (
+            <div
+              ref={sentinelRef}
+              className="py-4 text-center"
+              style={{ paddingBottom: "calc(88px + env(safe-area-inset-bottom))" }}
+            >
+              {loading ? (
+                <span className="text-xs text-[var(--ink-soft)]">Loading…</span>
+              ) : (
+                <span aria-hidden className="block h-1" />
+              )}
             </div>
           )}
-          {hasMore && !loading && (
-            <div ref={sentinelRef} className="py-4 text-center">
-              <span className="text-xs text-[var(--ink-soft)]">Loading more…</span>
-            </div>
-          )}
-          {hasMore && loading && (
-            <div className="py-4 text-center">
-              <span className="text-xs text-[var(--ink-soft)]">Loading more…</span>
-            </div>
+          {!hasMore && !loading && products.length > 0 && (
+            <div
+              aria-hidden
+              className="shrink-0"
+              style={{ height: "calc(72px + env(safe-area-inset-bottom))" }}
+            />
           )}
         </>
       )}

@@ -11,12 +11,13 @@ use Illuminate\Support\Str;
 
 class ProductService
 {
-    public function list(?string $search = null): LengthAwarePaginator
+    public function list(?string $search = null, ?int $categoryId = null): LengthAwarePaginator
     {
         return Product::query()
             ->with(['category:id,name', 'uom:id,name,code'])
             ->when($search, fn ($q) => $q->where('name', 'like', "%{$search}%")
                 ->orWhere('sku', 'like', "%{$search}%"))
+            ->when($categoryId, fn ($q) => $q->where('category_id', $categoryId))
             ->orderByRaw('stock <= 0')
             ->orderByDesc('created_at')
             ->paginate(15);
