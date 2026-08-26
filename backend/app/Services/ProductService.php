@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Product;
+use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Storage;
@@ -19,6 +20,14 @@ class ProductService
             ->orderByRaw('stock <= 0')
             ->orderByDesc('created_at')
             ->paginate(15);
+    }
+
+    public function all(): EloquentCollection
+    {
+        return Product::query()
+            ->with(['category:id,name', 'uom:id,name,code'])
+            ->orderBy('name')
+            ->get();
     }
 
     public function find(int $id): Product

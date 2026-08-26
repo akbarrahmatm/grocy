@@ -29,7 +29,7 @@ export default function ProductCard({
         {thumbnail ? (
           <img src={thumbnail} alt={product.name} loading="lazy" />
         ) : (
-          <div className="media-placeholder">{category.charAt(0)}</div>
+          <div className="media-placeholder"></div>
         )}
         {outOfStock ? (
           <span className="out-of-stock">Out of stock</span>
@@ -53,7 +53,9 @@ export default function ProductCard({
             <button
               onClick={() => onChangeQty(product.id, 1)}
               disabled={maxedOut}
-              aria-label={maxedOut ? "Maximum stock reached" : "Increase quantity"}
+              aria-label={
+                maxedOut ? "Maximum stock reached" : "Increase quantity"
+              }
             >
               +
             </button>

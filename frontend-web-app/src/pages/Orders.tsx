@@ -15,6 +15,7 @@ export default function Orders() {
   const [orders, setOrders] = useState<Order[]>([]);
   const [page, setPage] = useState(1);
   const [lastPage, setLastPage] = useState(1);
+  const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(() => isAuthenticated());
   const [error, setError] = useState<string | null>(null);
 
@@ -26,6 +27,7 @@ export default function Orders() {
       .then((res) => {
         if (cancelled) return;
         setLastPage(res.last_page);
+        setTotal(res.total);
         setOrders((prev) =>
           page === 1 ? res.data : [...prev, ...res.data]
         );
@@ -50,10 +52,7 @@ export default function Orders() {
     <div className="phone">
       <div className="section-label" style={{ paddingTop: 24 }}>
         <h2>My orders</h2>
-        <span>
-          {orders.length}
-          {lastPage > 1 ? ` of page ${page}/${lastPage}` : ""}
-        </span>
+        <span>{total}</span>
       </div>
 
       {loading && page === 1 ? (

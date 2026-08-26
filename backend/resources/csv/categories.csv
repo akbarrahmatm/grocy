@@ -1,0 +1,9 @@
+id,name,slug,description,is_active
+1,Sayuran,sayuran,"Berbagai jenis sayuran segar dan daun-daunan.",1
+2,Buah-buahan,buah-buahan,"Buah-buahan segar lokal dan impor.",1
+3,"Daging & Unggas",daging-unggas,"Daging sapi, ayam, bebek, dan olahan segar.",1
+4,"Ikan & Seafood",ikan-seafood,"Ikan laut, ikan air tawar, udang, dan makanan laut.",1
+5,"Bumbu & Rempah",bumbu-rempah,"Bumbu dapur segar dan rempah-rempah pilihan.",1
+6,"Beras & Biji-bijian",beras-biji-bijian,"Beras, kacang-kacangan, dan biji-bijian olahan.",1
+7,"Susu & Olahan",susu-olahan,"Susu segar, keju, mentega, dan telur.",1
+8,"Minyak & Bahan Pokok",minyak-bahan-pokok,"Minyak goreng, gula, garam, dan tepung.",1

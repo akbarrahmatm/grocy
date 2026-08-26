@@ -116,6 +116,33 @@ export const productApi = {
   show: (id: number) => request<Product>(`/product/${id}`),
 };
 
+// ponytail: /recipe/search endpoint not built yet; 404/network falls back to
+// local name matching so the flow is demoable. Drop mockSuggest when backend ships.
+async function mockSuggest(query: string): Promise<{ products: Product[] }> {
+  const words = query.toLowerCase().split(/\s+/).filter(Boolean);
+  const res = await productApi.list({});
+  return {
+    products: res.data.filter((p) =>
+      words.some((w) => p.name.toLowerCase().includes(w))
+    ),
+  };
+}
+
+export const recipeApi = {
+  suggest: async (query: string): Promise<{ products: Product[] }> => {
+    try {
+      return await request<{ products: Product[] }>("/recipe/search", {
+        method: "POST",
+        body: JSON.stringify({ query }),
+      });
+    } catch (err) {
+      const status = (err as ApiError).status;
+      if (!status || status === 404) return mockSuggest(query);
+      throw err;
+    }
+  },
+};
+
 export const cartApi = {
   list: () => request<CartItem[]>("/cart"),
   add: (product_id: number, qty = 1) =>

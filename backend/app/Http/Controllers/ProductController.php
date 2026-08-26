@@ -16,6 +16,11 @@ class ProductController extends Controller
         return response()->json($this->products->list($request->query('search')));
     }
 
+    public function all(): JsonResponse
+    {
+        return response()->json(['data' => $this->products->all()]);
+    }
+
     public function show(int $product): JsonResponse
     {
         return response()->json($this->products->find($product));

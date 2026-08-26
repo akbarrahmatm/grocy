@@ -6,6 +6,7 @@ const Explore = lazy(() => import("@/pages/Explore"));
 const Login = lazy(() => import("@/pages/Login"));
 const Register = lazy(() => import("@/pages/Register"));
 const Cart = lazy(() => import("@/pages/Cart"));
+const Recipes = lazy(() => import("@/pages/Recipes"));
 const Checkout = lazy(() => import("@/pages/Checkout"));
 const Orders = lazy(() => import("@/pages/Orders"));
 const OrderDetail = lazy(() => import("@/pages/OrderDetail"));
@@ -51,6 +52,7 @@ function App() {
             }
           />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/recipes" element={<Recipes />} />
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/orders" element={<Orders />} />
           <Route path="/orders/:id" element={<OrderDetail />} />
