@@ -343,9 +343,8 @@
 .card-category {
   font-family: var(--font-mono);
   font-size: 0.62rem;
-  letter-spacing: 0.09em;
-  text-transform: uppercase;
   color: var(--moss-dark);
+  font-weight: 600;
   margin: 0 0 4px;
 }
 
@@ -756,8 +755,9 @@
   font-family: var(--font-mono);
   font-size: 0.6rem;
   letter-spacing: 0.06em;
-  text-transform: uppercase;
-  background: rgba(255, 255, 255, 0.7);
+  text-transform: capitalize;
+  font-weight: 600;
+  background: rgba(102, 102, 102, 0.055);
   color: var(--moss-dark);
   padding: 3px 9px;
   border-radius: 999px;
