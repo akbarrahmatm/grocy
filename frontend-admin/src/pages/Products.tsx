@@ -31,10 +31,11 @@ function Products() {
           ) : (
             <span
               className="w-9 h-9 rounded-lg flex items-center justify-center text-xs font-bold flex-shrink-0"
-              style={{ background: "var(--ad-active-bg)", color: "var(--ad-muted)" }}
-            >
-              {p.name.charAt(0).toUpperCase()}
-            </span>
+              style={{
+                background: "var(--ad-active-bg)",
+                color: "var(--ad-muted)",
+              }}
+            ></span>
           )}
           <div className="min-w-0">
             <div

@@ -41,15 +41,11 @@ export default function Profile() {
         <div>
           <p className="profile-name">{user.name}</p>
           <p className="profile-email">{user.email}</p>
-          <span className="badge">{user.is_customer === 1 ? "Member" : "Staff"}</span>
         </div>
       </div>
 
       <div className="menu">
-        <button
-          className="menu-item"
-          onClick={() => navigate("/orders")}
-        >
+        <button className="menu-item" onClick={() => navigate("/orders")}>
           <span className="menu-icon">
             <Package size={17} />
           </span>
@@ -59,10 +55,7 @@ export default function Profile() {
           </span>
           <span className="menu-arrow">›</span>
         </button>
-        <button
-          className="menu-item"
-          onClick={() => navigate("/address")}
-        >
+        <button className="menu-item" onClick={() => navigate("/address")}>
           <span className="menu-icon">
             <MapPin size={17} />
           </span>
@@ -72,10 +65,16 @@ export default function Profile() {
           </span>
           <span className="menu-arrow">›</span>
         </button>
-        <button className="menu-item logout" onClick={handleLogout} disabled={loggingOut}>
+        <button
+          className="menu-item logout"
+          onClick={handleLogout}
+          disabled={loggingOut}
+        >
           <span className="menu-icon">↩</span>
           <span className="menu-text">
-            <span className="t">{loggingOut ? "Signing out…" : "Sign out"}</span>
+            <span className="t">
+              {loggingOut ? "Signing out…" : "Sign out"}
+            </span>
           </span>
         </button>
       </div>
