@@ -22,6 +22,7 @@ export default function Explore() {
   const navigate = useNavigate();
   const [products, setProducts] = useState<Product[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
   const [query, setQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState(ALL);
   const [page, setPage] = useState(1);
@@ -39,6 +40,8 @@ export default function Explore() {
 
   useEffect(() => {
     let cancelled = false;
+    setLoading(true);
+    setError(null);
     productApi
       .list({ page, search: debouncedQuery.trim() || undefined })
       .then((res) => {
@@ -53,6 +56,9 @@ export default function Explore() {
           setError(
             err instanceof Error ? err.message : "Failed to load products"
           );
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
       });
     return () => {
       cancelled = true;
@@ -161,6 +167,23 @@ export default function Explore() {
 
       {error ? (
         <p className="text-sm text-[var(--coral)] px-5">{error}</p>
+      ) : loading && products.length === 0 ? (
+        <div className="grid">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <div key={i} className="ad-card animate-pulse">
+              <div className="h-28 bg-[var(--line)] rounded-t-xl" />
+              <div className="p-3 space-y-2">
+                <div className="h-3 bg-[var(--line)] rounded w-3/4" />
+                <div className="h-3 bg-[var(--line)] rounded w-1/2" />
+                <div className="h-6 bg-[var(--line)] rounded w-full mt-2" />
+              </div>
+            </div>
+          ))}
+        </div>
+      ) : filtered.length === 0 && !loading ? (
+        <p className="text-sm text-[var(--ink-soft)] px-5 py-8 text-center">
+          No products found{debouncedQuery ? ` for "${debouncedQuery}"` : ""}.
+        </p>
       ) : (
         <>
           <div className="grid">
@@ -174,11 +197,19 @@ export default function Explore() {
               />
             ))}
           </div>
-          {hasMore && (
+          {loading && products.length > 0 && (
+            <div className="py-3 text-center">
+              <span className="text-xs text-[var(--ink-soft)]">Loading…</span>
+            </div>
+          )}
+          {hasMore && !loading && (
             <div ref={sentinelRef} className="py-4 text-center">
-              <span className="text-xs text-[var(--ink-soft)]">
-                Loading more…
-              </span>
+              <span className="text-xs text-[var(--ink-soft)]">Loading more…</span>
+            </div>
+          )}
+          {hasMore && loading && (
+            <div className="py-4 text-center">
+              <span className="text-xs text-[var(--ink-soft)]">Loading more…</span>
             </div>
           )}
         </>

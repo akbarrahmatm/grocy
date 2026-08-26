@@ -71,13 +71,22 @@ function Forbidden() {
 
 function RequireAuth({ children }: { children: ReactNode }) {
   const navigate = useNavigate();
-  const [isAuthChecked, setIsAuthChecked] = useState(false);
+  const [verified, setVerified] = useState(false);
+  const [isForbidden, setIsForbidden] = useState(false);
 
   useEffect(() => {
+    if (!isAuthenticated()) {
+      navigate("/login", { replace: true });
+      return;
+    }
     async function checkAuth() {
       try {
         await authApi.me();
-        setIsAuthChecked(true);
+        const user = getSessionUser();
+        if (user?.is_customer) {
+          setIsForbidden(true);
+        }
+        setVerified(true);
       } catch {
         clearSession();
         navigate("/login", { replace: true });
@@ -86,11 +95,10 @@ function RequireAuth({ children }: { children: ReactNode }) {
     checkAuth();
   }, [navigate]);
 
-  if (!isAuthChecked) return children;
-
   if (!isAuthenticated()) return <Navigate to="/login" replace />;
-  const user = getSessionUser();
-  if (user?.is_customer) return <Forbidden />;
+  if (isForbidden) return <Forbidden />;
+  if (!verified) return <Loading />;
+
   return children;
 }
 

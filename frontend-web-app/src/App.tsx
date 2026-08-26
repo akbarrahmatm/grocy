@@ -29,6 +29,11 @@ function GuestOnly({ children }: { children: ReactNode }) {
   return isAuthenticated() ? <Navigate to="/" replace /> : children;
 }
 
+function RequireAuth({ children }: { children: ReactNode }) {
+  if (!isAuthenticated()) return <Navigate to="/login" replace />;
+  return children;
+}
+
 function App() {
   return (
     <BrowserRouter>
@@ -52,7 +57,14 @@ function App() {
             }
           />
           <Route path="/cart" element={<Cart />} />
-          <Route path="/recipes" element={<Recipes />} />
+          <Route
+            path="/recipes"
+            element={
+              <RequireAuth>
+                <Recipes />
+              </RequireAuth>
+            }
+          />
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/orders" element={<Orders />} />
           <Route path="/orders/:id" element={<OrderDetail />} />

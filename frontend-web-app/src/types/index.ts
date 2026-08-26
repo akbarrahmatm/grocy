@@ -132,3 +132,16 @@ export interface ShippingRate {
   price: number;
   etd: string;
 }
+
+export interface RecipeHistory {
+  id: number;
+  user_id: number;
+  dish: string;
+  total_items: number;
+  available_items: Array<{ id: number | null; name: string; ingredient: string; stock: number | null; product?: Product }>;
+  unavailable_items: Array<{ id: number | null; name: string; ingredient: string }>;
+  additional_items: Array<{ id: number | null; name: string; ingredient: string }>;
+  recipe: string[];
+  created_at: string;
+  updated_at: string;
+}

@@ -116,31 +116,38 @@ export const productApi = {
   show: (id: number) => request<Product>(`/product/${id}`),
 };
 
-// ponytail: /recipe/search endpoint not built yet; 404/network falls back to
-// local name matching so the flow is demoable. Drop mockSuggest when backend ships.
-async function mockSuggest(query: string): Promise<{ products: Product[] }> {
-  const words = query.toLowerCase().split(/\s+/).filter(Boolean);
-  const res = await productApi.list({});
-  return {
-    products: res.data.filter((p) =>
-      words.some((w) => p.name.toLowerCase().includes(w))
-    ),
-  };
-}
+export type RecipeSuggestResponse = {
+  dish: string;
+  products: Product[];
+  available_items: Array<{
+    id: number | null;
+    name: string;
+    stock: number | null;
+    ingredient: string;
+    product?: Product;
+  }>;
+  unavailable_items: Array<{ id: number | null; name: string; ingredient: string }>;
+  additional_items: Array<{ id: number | null; name: string; ingredient: string }>;
+  recipe: string[];
+  total_items: number;
+};
 
 export const recipeApi = {
-  suggest: async (query: string): Promise<{ products: Product[] }> => {
-    try {
-      return await request<{ products: Product[] }>("/recipe/search", {
-        method: "POST",
-        body: JSON.stringify({ query }),
-      });
-    } catch (err) {
-      const status = (err as ApiError).status;
-      if (!status || status === 404) return mockSuggest(query);
-      throw err;
-    }
-  },
+  suggest: (dish: string): Promise<RecipeSuggestResponse & { history_id?: number }> =>
+    request<RecipeSuggestResponse & { history_id?: number }>("/recipe/suggest", {
+      method: "POST",
+      body: JSON.stringify({ dish }),
+    }),
+  history: (page = 1) =>
+    request<Paginated<import("@/types").RecipeHistory>>(
+      `/recipe/history?page=${page}`
+    ),
+  historyShow: (id: number): Promise<RecipeSuggestResponse & { id: number; created_at: string }> =>
+    request<RecipeSuggestResponse & { id: number; created_at: string }>(
+      `/recipe/history/${id}`
+    ),
+  historyDelete: (id: number) =>
+    request<{ message: string }>(`/recipe/history/${id}`, { method: "DELETE" }),
 };
 
 export const cartApi = {
