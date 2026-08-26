@@ -1,7 +1,6 @@
 import { useState } from "react";
-import { Bell, LogOut, Menu, Moon, Sun } from "lucide-react";
+import { LogOut, Menu, Moon, Sun } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { NOTIFICATIONS } from "@/lib/constants";
 import { authApi, clearSession } from "@/lib/api";
 import { useToast } from "@/hooks/useToast";
 
@@ -18,7 +17,6 @@ export default function Navbar({
   onToggleDark,
   onOpenSidebar,
 }: NavbarProps) {
-  const [notifOpen, setNotifOpen] = useState(false);
   const [confirmLogout, setConfirmLogout] = useState(false);
   const navigate = useNavigate();
   const { push } = useToast();
