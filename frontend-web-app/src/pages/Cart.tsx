@@ -28,7 +28,10 @@ export default function Cart() {
     try {
       await setQty(item.id, item.qty + delta);
     } catch (err) {
-      push(err instanceof Error ? err.message : "Failed to update quantity", "error");
+      push(
+        err instanceof Error ? err.message : "Failed to update quantity",
+        "error"
+      );
     } finally {
       setBusyId(null);
     }
@@ -40,7 +43,10 @@ export default function Cart() {
       await remove(item.id);
       push("Item removed from cart");
     } catch (err) {
-      push(err instanceof Error ? err.message : "Failed to remove item", "error");
+      push(
+        err instanceof Error ? err.message : "Failed to remove item",
+        "error"
+      );
     } finally {
       setBusyId(null);
     }
@@ -81,14 +87,13 @@ export default function Cart() {
                     loading="lazy"
                   />
                 ) : (
-                  <div className="cart-img media-placeholder">
-                    {it.product?.name?.charAt(0) ?? "?"}
-                  </div>
+                  <div className="cart-img media-placeholder">-</div>
                 )}
                 <div className="cart-info">
                   <h3>{it.product?.name ?? "Product"}</h3>
                   <p className="cart-unit">
-                    per {it.product?.uom?.name ?? it.product?.uom?.code ?? "pcs"}
+                    per{" "}
+                    {it.product?.uom?.name ?? it.product?.uom?.code ?? "pcs"}
                   </p>
                   <div className="qty">
                     <button
@@ -132,7 +137,11 @@ export default function Cart() {
           </div>
 
           <div className="cta-wrap">
-            <Button className="w-full" disabled={items.length === 0} onClick={handleCheckout}>
+            <Button
+              className="w-full"
+              disabled={items.length === 0}
+              onClick={handleCheckout}
+            >
               {items.length === 0
                 ? "Cart is empty"
                 : `Checkout • ${formatCurrency(subtotal)}`}

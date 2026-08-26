@@ -46,15 +46,27 @@ function clearSession(): void {
 
 async function request<T>(path: string, init: RequestInit = {}): Promise<T> {
   const token = getToken();
-  const res = await fetch(API_BASE + path, {
-    ...init,
-    headers: {
-      "Content-Type": "application/json",
-      Accept: "application/json",
-      ...(token ? { Authorization: `Bearer ${token}` } : {}),
-      ...init.headers,
-    },
-  });
+  let res: Response;
+  try {
+    res = await fetch(API_BASE + path, {
+      ...init,
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        ...init.headers,
+      },
+    });
+  } catch (e) {
+    // Safari: "Load failed" / "Failed to fetch" / AbortError saat n8n lama
+    const msg = e instanceof Error ? e.message : String(e);
+    const isAbort = e instanceof DOMException && e.name === "AbortError";
+    const err = new Error(
+      isAbort ? "Request timed out. AI is slow, please retry." : `Network error: ${msg}`
+    ) as ApiError;
+    err.status = isAbort ? 504 : 0;
+    throw err;
+  }
 
   const body: unknown = await res.json().catch(() => ({}));
 
@@ -133,10 +145,14 @@ export type RecipeSuggestResponse = {
 };
 
 export const recipeApi = {
-  suggest: (dish: string): Promise<RecipeSuggestResponse & { history_id?: number }> =>
+  suggest: (
+    dish: string,
+    opts?: { signal?: AbortSignal }
+  ): Promise<RecipeSuggestResponse & { history_id?: number }> =>
     request<RecipeSuggestResponse & { history_id?: number }>("/recipe/suggest", {
       method: "POST",
       body: JSON.stringify({ dish }),
+      signal: opts?.signal,
     }),
   history: (page = 1) =>
     request<Paginated<import("@/types").RecipeHistory>>(

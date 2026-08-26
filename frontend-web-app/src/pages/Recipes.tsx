@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "@/App.css";
 import Header from "@/components/Header";
@@ -28,6 +28,8 @@ export default function Recipes() {
   const [error, setError] = useState<string | null>(null);
   const [histories, setHistories] = useState<RecipeHistory[]>([]);
   const [historyLoading, setHistoryLoading] = useState(false);
+  const abortRef = useRef<AbortController | null>(null);
+  const lastQueryRef = useRef<string>("");
 
   const results: Product[] = data?.products ?? [];
 
@@ -48,6 +50,10 @@ export default function Recipes() {
     fetchHistory();
   }, [user]);
 
+  useEffect(() => {
+    return () => abortRef.current?.abort();
+  }, []);
+
   const check = async (raw: string) => {
     const q = raw.trim();
     if (!q || loading) return;
@@ -56,25 +62,40 @@ export default function Recipes() {
       navigate("/login");
       return;
     }
+    abortRef.current?.abort();
+    const ctrl = new AbortController();
+    abortRef.current = ctrl;
+    lastQueryRef.current = q;
+    // Safari: n8n + Sumopod bisa 15-40s, default resource timeout ~60s di iOS, kasih 65s abort + pesan ramah
+    const timeout = setTimeout(() => ctrl.abort(), 65000);
     setLoading(true);
     setError(null);
     try {
-      const res = await recipeApi.suggest(q);
+      const res = await recipeApi.suggest(q, { signal: ctrl.signal });
       setData(res);
       setChecked(res.dish ?? q);
       fetchHistory();
     } catch (err) {
-      const msg =
-        err instanceof Error ? err.message : "Failed to analyze recipe";
-      if (
-        err instanceof Error &&
-        (err as unknown as { status?: number }).status === 401
-      ) {
+      if (ctrl.signal.aborted) {
+        setError("AI is taking too long (Safari timeout). Please tap Check again — or check History, it may have saved.");
+        return;
+      }
+      const status = (err as unknown as { status?: number }).status ?? 0;
+      const msg = err instanceof Error ? err.message : "Failed to analyze recipe";
+      if (status === 401) {
         push("Session expired, please sign in again", "error");
         navigate("/login");
       }
-      setError(msg);
+      // Safari "Load failed"/"Failed to fetch" (status 0) = network terputus saat nunggu lama
+      if (status === 0 && msg.includes("Network error")) {
+        setError("Network interrupted (Safari). Please retry — we extended timeout to 60s.");
+      } else if (status === 504) {
+        setError("AI is busy, please retry in a moment.");
+      } else {
+        setError(msg);
+      }
     } finally {
+      clearTimeout(timeout);
       setLoading(false);
     }
   };
@@ -244,9 +265,20 @@ export default function Recipes() {
       </div>
 
       {error ? (
-        <p className="ai-status text-[var(--coral)]">{error}</p>
+        <div className="ai-status text-[var(--coral)] flex flex-col items-center gap-2">
+          <p>{error}</p>
+          {lastQueryRef.current && (
+            <button
+              onClick={() => check(lastQueryRef.current)}
+              className="search-go !w-auto px-4 py-1 text-sm"
+              disabled={loading}
+            >
+              Retry
+            </button>
+          )}
+        </div>
       ) : loading ? (
-        <p className="ai-status">Analyzing &ldquo;{query.trim()}&rdquo;…</p>
+        <p className="ai-status">Analyzing &ldquo;{query.trim()}&rdquo;… (may take 20-40s on Safari)…</p>
       ) : checked && data ? (
         <>
           <div className="section-label">

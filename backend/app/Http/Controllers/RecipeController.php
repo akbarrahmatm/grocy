@@ -35,20 +35,29 @@ class RecipeController extends Controller
                 'X-API-KEY' => $secret,
                 'Content-Type' => 'application/json',
                 'Accept' => 'application/json',
-            ])->timeout(20)->post('https://workflow.akbarrahmatm.my.id/webhook/ai-recipe', [
+            ])->connectTimeout(10)->timeout(60)->retry(1, 500)->post('https://workflow.akbarrahmatm.my.id/webhook/ai-recipe', [
                 'dish' => $dish,
             ]);
         } catch (\Throwable $e) {
-            Log::error('Recipe webhook exception', ['error' => $e->getMessage()]);
-            return response()->json(['message' => 'Recipe service unavailable.'], 502);
+            // ConnectionException = n8n/Sumopod lama -> Safari akan lihat TypeError Failed to fetch kalau tidak di-handle
+            $isTimeout = str_contains($e->getMessage(), 'timed out') || str_contains($e->getMessage(), 'cURL error 28');
+            Log::error('Recipe webhook exception', ['error' => $e->getMessage(), 'timeout' => $isTimeout]);
+            return response()->json([
+                'message' => $isTimeout ? 'Recipe AI is taking too long. Please retry.' : 'Recipe service unavailable.',
+            ], 504);
         }
 
         if (! $response->successful()) {
             Log::warning('Recipe webhook failed', ['status' => $response->status(), 'body' => $response->body()]);
+            // n8n kadang timeout → 504 gateway, forward as 504 biar Safari tidak bingung dengan 502 abadi
+            $status = $response->status();
+            if ($status === 504 || $status === 524) {
+                return response()->json(['message' => 'Recipe AI is taking too long. Please retry.'], 504);
+            }
             return response()->json([
                 'message' => 'Failed to analyze recipe.',
                 'details' => $response->json() ?? $response->body(),
-            ], $response->status() >= 400 && $response->status() < 500 ? $response->status() : 502);
+            ], $status >= 400 && $status < 500 ? $status : 502);
         }
 
         $data = $response->json();

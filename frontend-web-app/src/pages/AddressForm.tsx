@@ -1,16 +1,13 @@
 import { useEffect, useState, type FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
-import { Crosshair, MapPin, X } from "lucide-react";
+import { Crosshair } from "lucide-react";
 import "@/App.css";
 import BottomNav from "@/components/BottomNav";
 import Button from "@/components/ui/Button";
 import Field from "@/components/ui/Field";
 import { useCart } from "@/context/CartContext";
 import { useToast } from "@/hooks/useToast";
-import { useDebouncedValue } from "@/hooks/useDebouncedValue";
-import { addressApi, shippingApi } from "@/lib/api";
-import { cn } from "@/lib/utils";
-import type { Destination } from "@/types";
+import { addressApi } from "@/lib/api";
 
 const EMPTY_FORM = {
   label: "",
@@ -40,15 +37,6 @@ export default function AddressForm({ id }: AddressFormProps) {
   const [loading, setLoading] = useState(isEdit);
   const [saving, setSaving] = useState(false);
   const [locating, setLocating] = useState(false);
-
-  const [areaQuery, setAreaQuery] = useState("");
-  const [areaResults, setAreaResults] = useState<Destination[]>([]);
-  const [searchedFor, setSearchedFor] = useState("");
-  const [showAreaList, setShowAreaList] = useState(false);
-  const debouncedAreaQuery = useDebouncedValue(areaQuery, 300);
-  const areaKeyword = debouncedAreaQuery.trim();
-  const areaSearching =
-    areaKeyword.length >= 3 && searchedFor !== areaKeyword;
 
   useEffect(() => {
     if (!isEdit || typeof id !== "number") return;
@@ -91,31 +79,6 @@ export default function AddressForm({ id }: AddressFormProps) {
     };
   }, [id, isEdit, navigate, push]);
 
-  useEffect(() => {
-    const keyword = debouncedAreaQuery.trim();
-    if (keyword.length < 3) return;
-    let cancelled = false;
-    shippingApi
-      .destinations(keyword)
-      .then((res) => {
-        if (cancelled) return;
-        setAreaResults(res.data);
-        setSearchedFor(keyword);
-        setShowAreaList(true);
-      })
-      .catch((err) => {
-        if (!cancelled)
-          push(
-            err instanceof Error ? err.message : "Failed to search areas",
-            "error"
-          );
-      });
-    return () => {
-      cancelled = true;
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [debouncedAreaQuery]);
-
   const setField = (
     key: keyof typeof EMPTY_FORM,
     value: string | number | boolean | null
@@ -147,18 +110,6 @@ export default function AddressForm({ id }: AddressFormProps) {
     );
   }
 
-  function pickArea(area: Destination) {
-    setForm((s) => ({
-      ...s,
-      destination_id: area.id,
-      city: area.city || s.city,
-      province: area.province || s.province,
-      postal_code: area.postal_code || s.postal_code,
-    }));
-    setAreaQuery(area.label);
-    setShowAreaList(false);
-  }
-
   async function handleSave(e: FormEvent) {
     e.preventDefault();
     for (const key of ["label", "receiver_name", "phone", "address", "city", "province", "postal_code"] as const) {
@@ -166,10 +117,6 @@ export default function AddressForm({ id }: AddressFormProps) {
         push("All fields are required except default flag", "error");
         return;
       }
-    }
-    if (!form.destination_id) {
-      push("Pick a delivery area so we can calculate shipping", "error");
-      return;
     }
     setSaving(true);
     try {
@@ -231,72 +178,6 @@ export default function AddressForm({ id }: AddressFormProps) {
             onChange={(v) => setField("address", v)}
             placeholder="Jl. …"
           />
-          <div className="relative">
-            <label className="block text-sm font-medium mb-1.5 text-[var(--ink)]">
-              Delivery area
-            </label>
-            <div className="flex items-center gap-2">
-              <input
-                value={areaQuery}
-                onChange={(e) => setAreaQuery(e.target.value)}
-                onFocus={() =>
-                  areaResults.length > 0 && setShowAreaList(true)
-                }
-                placeholder={
-                  form.destination_id
-                    ? `Selected (ID ${form.destination_id})`
-                    : "Search district / city, min. 3 letters"
-                }
-                className={cn(
-                  "w-full px-3.5 py-2.5 rounded-xl border text-sm outline-none transition-colors bg-[var(--paper)]",
-                  form.destination_id
-                    ? "border-[var(--moss)]"
-                    : "border-[var(--line)] focus:border-[var(--moss)]"
-                )}
-              />
-              {areaSearching && (
-                <span className="text-xs text-[var(--ink-soft)] whitespace-nowrap">
-                  …
-                </span>
-              )}
-              {form.destination_id && (
-                <button
-                  type="button"
-                  aria-label="Clear delivery area"
-                  onClick={() => {
-                    setField("destination_id", null);
-                    setAreaQuery("");
-                  }}
-                  className="text-[var(--ink-soft)] hover:text-[var(--ink)]"
-                >
-                  <X size={16} />
-                </button>
-              )}
-            </div>
-            {showAreaList &&
-            areaResults.length > 0 &&
-            areaQuery.trim().length >= 3 && (
-              <ul className="absolute z-10 left-0 right-0 mt-1 rounded-xl border border-[var(--line)] bg-[var(--paper)] shadow-lg overflow-hidden max-h-56 overflow-y-auto">
-                {areaResults.map((area) => (
-                  <li key={area.id}>
-                    <button
-                      type="button"
-                      onClick={() => pickArea(area)}
-                      className="w-full text-left px-3.5 py-2.5 text-sm text-[var(--ink)] hover:bg-[var(--lavender)] flex items-start gap-2"
-                    >
-                      <MapPin size={14} className="mt-0.5 shrink-0 text-[var(--ink-soft)]" />
-                      <span>{area.label}</span>
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            )}
-            {!form.destination_id && (
-              <p className="mt-1 text-xs text-[var(--ink-soft)]">
-                Required for shipping cost calculation.
-              </p>
-            )}
-          </div>
           <div className="address-form-grid">
             <Field
               label="City"
