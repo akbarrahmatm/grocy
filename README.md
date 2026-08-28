@@ -207,3 +207,33 @@ npm run dev
 ```
 
 Both frontends read the API base URL from `VITE_API_URL` (default `http://127.0.0.1:8000`). Set `FRONTEND_URL` in backend `.env` for CORS.
+
+### Frontend App (Mobile - Expo)
+
+1. **Install Dependencies**:
+   ```bash
+   cd frontend-app
+   npm install
+   ```
+
+2. **Run Development Server (Expo Go / Metro)**:
+   ```bash
+   npm run start
+   ```
+   *Gunakan aplikasi Expo Go di smartphone untuk memindai QR Code.*
+
+3. **Build APK Debug secara Lokal**:
+   *Pastikan JDK versi 21+ dan Android SDK terinstal di perangkat lokal.*
+   ```bash
+   # Generate folder native android
+   npx expo prebuild --platform android --no-install
+   
+   # Set environment variable java home (Windows)
+   $env:JAVA_HOME="C:\Program Files\Java\jdk-21.0.12"
+   $env:ANDROID_HOME="C:\Users\ACER\AppData\Local\Android\Sdk"
+
+   # Lakukan kompilasi debug APK
+   cd android
+   .\gradlew.bat assembleDebug
+   ```
+   *File APK keluaran:* `frontend-app/android/app/build/outputs/apk/debug/app-debug.apk`
