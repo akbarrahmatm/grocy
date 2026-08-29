@@ -24,19 +24,30 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    initSession()
-      .then(({ user: storedUser, token }) => {
+    // Prevent initialization from hanging the app indefinitely if the network is extremely slow
+    const initTimeout = new Promise((resolve) => setTimeout(resolve, 3000));
+    
+    Promise.race([
+      initSession(),
+      initTimeout.then(() => ({ token: null, user: null }))
+    ])
+      .then((sessionData) => {
+        const { user: storedUser, token } = sessionData || { token: null, user: null };
         if (token) {
           if (storedUser) setUser(storedUser);
+          
+          // Verify session in background without blocking app rendering
           authApi
             .me()
             .then(setUser)
             .catch(() => {
-              // If token is invalid or expired
               clearSession();
               setUser(null);
             });
         }
+      })
+      .catch(() => {
+        setUser(null);
       })
       .finally(() => {
         setLoading(false);
